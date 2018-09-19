@@ -24,6 +24,7 @@
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
 #include "../inc/BLEDS_board_leds.h"
+#include "../../Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
