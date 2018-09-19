@@ -8,6 +8,12 @@
       <itemPath>Prj/inc/configuration_bits.h</itemPath>
       <itemPath>Prj/inc/BLEDS_board_leds.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="f1"
+                   displayName="Lib_H_PIC_oscillators"
+                   projectFiles="true">
+      <itemPath>Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.c</itemPath>
+      <itemPath>Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
