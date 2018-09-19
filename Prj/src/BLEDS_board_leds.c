@@ -32,6 +32,12 @@ void
 BLEDS_Init_AllLeds(
 	void)
 {
+	/* Отключение аналоговых выходов */
+	ANSELB = 0x0000;
+	ANSELC = 0x0000;
+	ANSELD = 0x0000;
+	ANSELE = 0x0000;
+	
 	/* Вызов функции инициализации зеленого светодиода */
 	BLEDS_Init_GreenLed();
 }
@@ -41,7 +47,13 @@ BLEDS_Init_GreenLed(
 	void)
 {
 	/* TODO - Инициализация зеленого светодиода */
-	ANSELB = 0;
+	
+	/* Цифровой выход */
+	TRISBbits.TRISB12 = 0;
+	
+	/* Включение светодиода */
+	LATBbits.LATB12 = 1;
+
 }
 
 void
