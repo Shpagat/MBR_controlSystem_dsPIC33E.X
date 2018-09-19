@@ -1,29 +1,25 @@
-/**
+/** 
  * @file   	%<%NAME%>%.%<%EXTENSION%>%
  * @author 	%<%USER%>%
- * @version
+ * @version	
  * @date 	%<%DATE%>%, %<%TIME%>%
  * @brief
  */
 
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef BLEDS_BOARD_LEDS_H_
+#define BLEDS_BOARD_LEDS_H_
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
 /*==== |End  | <-- Секция - "C libraries" ====================================*/
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
-#include <xc.h>
+#include "xc.h"
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
-#include "../inc/BLEDS_board_leds.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -47,7 +43,7 @@
 /*#### |Begin| --> Секция - "Определение макросов" ###########################*/
 /*#### |End  | <-- Секция - "Определение макросов" ###########################*/
 
-#endif	/* MAIN_H_ */
+#endif	/* BLEDS_BOARD_LEDS_H_ */
 
 /*############################################################################*/
 /*################################ END OF FILE ###############################*/
