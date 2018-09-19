@@ -1,3 +1,36 @@
 [submodule "Lib_H_PIC_oscillators"]
 	path = Lib_H_PIC_oscillators
 	url = https://github.com/Raptor26/Lib_H_PIC_oscillators.git
+[submodule "Lib_A_CRC_cyclic_redundancy_check"]
+	path = Lib_A_CRC_cyclic_redundancy_check
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_CRC_cyclic_redundancy_check.git
+[submodule "Lib_A_DI_debug_information"]
+	path = Lib_A_DI_debug_information
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_DI_debug_information.git
+[submodule "Lib_A_DIFF_differentiators"]
+	path = Lib_A_DIFF_differentiators
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_DIFF_differentiators.git
+[submodule "Lib_A_FILT_filters.c"]
+	path = Lib_A_FILT_filters.c
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_FILT_filters.c.git
+[submodule "Lib_A_NINTEG_numerical_integration"]
+	path = Lib_A_NINTEG_numerical_integration
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_NINTEG_numerical_integration.git
+[submodule "Lib_A_REGUL_regulators"]
+	path = Lib_A_REGUL_regulators
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_REGUL_regulators.git
+[submodule "Lib_A_RGBF_ring_buffer"]
+	path = Lib_A_RGBF_ring_buffer
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_RGBF_ring_buffer.git
+[submodule "Lib_A_VTMR_virtual_timers"]
+	path = Lib_A_VTMR_virtual_timers
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_A_VTMR_virtual_timers.git
+[submodule "Lib_H_MPU60x0_inertial_sensor"]
+	path = Lib_H_MPU60x0_inertial_sensor
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_H_MPU60x0_inertial_sensor.git
+[submodule "Lib_H_PIC_spi"]
+	path = Lib_H_PIC_spi
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_H_PIC_spi.git
+[submodule "Lib_H_PIC_uart"]
+	path = Lib_H_PIC_uart
+	url = //m2/ORBPLA/Lib_Prog_C/Lib_H_PIC_uart.git
