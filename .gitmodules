@@ -1,0 +1,3 @@
+[submodule "Lib_H_PIC_oscillators"]
+	path = Lib_H_PIC_oscillators
+	url = https://github.com/Raptor26/Lib_H_PIC_oscillators.git

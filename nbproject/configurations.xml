@@ -27,6 +27,7 @@
   <sourceRootList>
     <Elem>Prj/inc</Elem>
     <Elem>Prj/src</Elem>
+    <Elem>Lib_H_PIC_oscillators</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
