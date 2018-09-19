@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>Prj/inc/main.h</itemPath>
       <itemPath>Prj/inc/configuration_bits.h</itemPath>
+      <itemPath>Prj/inc/BLEDS_board_leds.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -15,6 +16,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Prj/src/main.c</itemPath>
+      <itemPath>Prj/src/BLEDS_board_leds.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -24,6 +26,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>Prj/inc</Elem>
+    <Elem>Prj/src</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
