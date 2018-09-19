@@ -1,7 +1,7 @@
-/** 
+/**
  * @file   	%<%NAME%>%.%<%EXTENSION%>%
  * @author 	%<%USER%>%
- * @version	
+ * @version
  * @date 	%<%DATE%>%, %<%TIME%>%
  * @brief
  */
@@ -13,6 +13,9 @@
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
+#include "stdio.h"
+#include "stdint.h"
+#include "math.h"
 /*==== |End  | <-- Секция - "C libraries" ====================================*/
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
