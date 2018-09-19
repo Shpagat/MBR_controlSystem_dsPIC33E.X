@@ -37,7 +37,7 @@ BLEDS_Init_AllLeds(
 	ANSELC = 0x0000;
 	ANSELD = 0x0000;
 	ANSELE = 0x0000;
-	
+
 	/* Вызов функции инициализации зеленого светодиода */
 	BLEDS_Init_GreenLed();
 }
@@ -46,14 +46,21 @@ void
 BLEDS_Init_GreenLed(
 	void)
 {
-	/* TODO - Инициализация зеленого светодиода */
-	
+#if defined		(__PCB_758725_124_03__)
 	/* Цифровой выход */
 	TRISBbits.TRISB12 = 0;
-	
+
 	/* Включение светодиода */
 	LATBbits.LATB12 = 1;
 
+#elif defined	(__PCB_758725_124_02__)
+	/* Цифровой выход */
+
+	/* Включение светодиода */
+
+#else
+#error 'Please, set pcb version'
+#endif
 }
 
 void

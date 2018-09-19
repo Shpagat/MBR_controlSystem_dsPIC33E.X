@@ -1,9 +1,9 @@
 /build/
 /debug/
 /dist/
-/nbproject/Makefile-*
-/nbproject/Package-*
-/nbproject/private/*
+nbproject/Makefile-*
+nbproject/Package-*
+nbproject/private/*
 
 # Игнорирование всех файлов, начинающихся со спецсимвола "~"
-!~*
+~*
