@@ -8,11 +8,75 @@
       <itemPath>Prj/inc/configuration_bits.h</itemPath>
       <itemPath>Prj/inc/BLEDS_board_leds.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="f2"
+                   displayName="Lib_A_CRC_cyclic_redundancy_check"
+                   projectFiles="true">
+      <itemPath>Lib_A_CRC_cyclic_redundancy_check/Lib_A_CRC_cyclic_redundancy_check.c</itemPath>
+      <itemPath>Lib_A_CRC_cyclic_redundancy_check/Lib_A_CRC_cyclic_redundancy_check.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f3"
+                   displayName="Lib_A_DI_debug_information"
+                   projectFiles="true">
+      <itemPath>Lib_A_DI_debug_information/Lib_A_DI_debug_information.c</itemPath>
+      <itemPath>Lib_A_DI_debug_information/Lib_A_DI_debug_information.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f4"
+                   displayName="Lib_A_DIFF_differentiators"
+                   projectFiles="true">
+      <itemPath>Lib_A_DIFF_differentiators/Lib_A_DIFF_differentiators.c</itemPath>
+      <itemPath>Lib_A_DIFF_differentiators/Lib_A_DIFF_differentiators.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f5" displayName="Lib_A_FILT_filters.c" projectFiles="true">
+      <itemPath>Lib_A_FILT_filters.c/Lib_A_FILT_filters.c</itemPath>
+      <itemPath>Lib_A_FILT_filters.c/Lib_A_FILT_filters.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f6"
+                   displayName="Lib_A_NINTEG_numerical_integration"
+                   projectFiles="true">
+      <itemPath>Lib_A_NINTEG_numerical_integration/Lib_A_NINTEG_numerical_integration.c</itemPath>
+      <itemPath>Lib_A_NINTEG_numerical_integration/Lib_A_NINTEG_numerical_integration.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f7"
+                   displayName="Lib_A_REGUL_regulators"
+                   projectFiles="true">
+      <itemPath>Lib_A_REGUL_regulators/Lib_A_REGUL_regulators.c</itemPath>
+      <itemPath>Lib_A_REGUL_regulators/Lib_A_REGUL_regulators.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f8"
+                   displayName="Lib_A_RGBF_ring_buffer"
+                   projectFiles="true">
+      <itemPath>Lib_A_RGBF_ring_buffer/Lib_A_RGBF_ring_buffer.c</itemPath>
+      <itemPath>Lib_A_RGBF_ring_buffer/Lib_A_RGBF_ring_buffer.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f9"
+                   displayName="Lib_A_VTMR_virtual_timers"
+                   projectFiles="true">
+      <itemPath>Lib_A_VTMR_virtual_timers/Lib_A_VTMR_virtual_timers.c</itemPath>
+      <itemPath>Lib_A_VTMR_virtual_timers/Lib_A_VTMR_virtual_timers.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="Lib_H_MPU60x0_inertial_sensor"
+                   displayName="Lib_H_MPU60x0_inertial_sensor"
+                   projectFiles="true">
+      <itemPath>Lib_H_MPU60x0_inertial_sensor/Lib_H_mpu60x0_inertial_sensor.c</itemPath>
+      <itemPath>Lib_H_MPU60x0_inertial_sensor/Lib_H_mpu60x0_inertial_sensor.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="f1"
                    displayName="Lib_H_PIC_oscillators"
                    projectFiles="true">
       <itemPath>Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.c</itemPath>
       <itemPath>Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="Lib_H_PIC_spi"
+                   displayName="Lib_H_PIC_spi"
+                   projectFiles="true">
+      <itemPath>Lib_H_PIC_spi/Lib_H_PIC_spi.c</itemPath>
+      <itemPath>Lib_H_PIC_spi/Lib_H_PIC_spi.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="Lib_H_PIC_uart"
+                   displayName="Lib_H_PIC_uart"
+                   projectFiles="true">
+      <itemPath>Lib_H_PIC_uart/Lib_H_PIC_uart.c</itemPath>
+      <itemPath>Lib_H_PIC_uart/Lib_H_PIC_uart.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -34,6 +98,17 @@
     <Elem>Prj/inc</Elem>
     <Elem>Prj/src</Elem>
     <Elem>Lib_H_PIC_oscillators</Elem>
+    <Elem>Lib_A_CRC_cyclic_redundancy_check</Elem>
+    <Elem>Lib_A_DI_debug_information</Elem>
+    <Elem>Lib_A_DIFF_differentiators</Elem>
+    <Elem>Lib_A_FILT_filters.c</Elem>
+    <Elem>Lib_A_NINTEG_numerical_integration</Elem>
+    <Elem>Lib_A_REGUL_regulators</Elem>
+    <Elem>Lib_A_RGBF_ring_buffer</Elem>
+    <Elem>Lib_A_VTMR_virtual_timers</Elem>
+    <Elem>Lib_H_MPU60x0_inertial_sensor</Elem>
+    <Elem>Lib_H_PIC_spi</Elem>
+    <Elem>Lib_H_PIC_uart</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -110,7 +185,8 @@
         <property key="optimization-level" value="0"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value="__FRC__;__PCB_758725_124_03__"/>
+        <property key="preprocessor-macros"
+                  value="__FRC__;__PCB_758725_124_03__;__DI_MAX_PLOTS_IN_PACKAGE__=30;__REGUL_FLOAT_POINT_TYPE__=float"/>
         <property key="scalar-model" value="default"/>
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
