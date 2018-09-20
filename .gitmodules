@@ -33,4 +33,4 @@
 	url = //m2/ORBPLA/Lib_Prog_C/Lib_H_PIC_spi.git
 [submodule "Lib_H_PIC_uart"]
 	path = Lib_H_PIC_uart
-	url = //m2/ORBPLA/Lib_Prog_C/Lib_H_PIC_uart.git
+	url = https://github.com/Raptor26/Lib_H_PIC_uart.git
