@@ -25,6 +25,19 @@
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
+void
+HPT_Init_TMRForProg_Tact(
+	uint16_t cnt)
+{
+	unsigned int config = T9_ON & T9_IDLE_CON & T9_PS_1_64 & T9_INT_PRIOR_1 & T9_INT_ON;
+	OpenTimer9(config, cnt);
+}
+
+void  __attribute__ ((__interrupt__, auto_psv))
+_T9Interrupt (void)
+{
+	
+}
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
 

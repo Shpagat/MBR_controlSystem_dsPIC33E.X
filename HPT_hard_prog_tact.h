@@ -17,6 +17,7 @@
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
 #include <xc.h>
+#include <timer.h>
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
