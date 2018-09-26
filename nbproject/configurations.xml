@@ -7,7 +7,8 @@
       <itemPath>Prj/inc/main.h</itemPath>
       <itemPath>Prj/inc/configuration_bits.h</itemPath>
       <itemPath>Prj/inc/BLEDS_board_leds.h</itemPath>
-      <itemPath>HPT_hard_prog_tact.h</itemPath>
+      <itemPath>Prj/inc/HPT_hard_prog_tact.h</itemPath>
+      <itemPath>Prj/inc/UDI_uart_debug_information.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2"
                    displayName="Lib_A_CRC_cyclic_redundancy_check"
@@ -88,7 +89,8 @@
                    projectFiles="true">
       <itemPath>Prj/src/main.c</itemPath>
       <itemPath>Prj/src/BLEDS_board_leds.c</itemPath>
-      <itemPath>HPT_hard_prog_tact.c</itemPath>
+      <itemPath>Prj/src/HPT_hard_prog_tact.c</itemPath>
+      <itemPath>Prj/src/UDI_uart_debug_information.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

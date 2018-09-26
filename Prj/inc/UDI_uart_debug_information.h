@@ -1,21 +1,18 @@
-/**
+/** 
  * @file   	%<%NAME%>%.%<%EXTENSION%>%
  * @author 	%<%USER%>%
- * @version
+ * @version	
  * @date 	%<%DATE%>%, %<%TIME%>%
  * @brief
  */
 
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef UDI_UART_DEBUG_INFORMATION_H
+#define UDI_UART_DEBUG_INFORMATION_H
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
 /*==== |End  | <-- Секция - "C libraries" ====================================*/
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
@@ -23,16 +20,11 @@
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
-#include "../inc/BLEDS_board_leds.h"
-#include "../../Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.h"
-#include "../inc/UDI_uart_debug_information.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
 /*#### |Begin| --> Секция - "Определение констант" ###########################*/
-//#define __DI_MAX_PLOTS_IN_PACKAGE__ 30
-//#define __REGUL_FLOAT_POINT_TYPE__ float
 /*#### |End  | <-- Секция - "Определение констант" ###########################*/
 
 
@@ -45,13 +37,21 @@
 
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
+extern void
+UDI_Init_All_UART3_RxTx_With_DMA_Tx(
+unsigned int baudrate);
+
+extern void
+UDI_StartForceUartDMATransmit(
+	unsigned int *pMemSrc, 
+	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 
 /*#### |Begin| --> Секция - "Определение макросов" ###########################*/
 /*#### |End  | <-- Секция - "Определение макросов" ###########################*/
 
-#endif	/* MAIN_H_ */
+#endif	/* UDI_UART_DEBUG_INFORMATION_H */
 
 /*############################################################################*/
 /*################################ END OF FILE ###############################*/

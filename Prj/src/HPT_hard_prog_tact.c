@@ -1,15 +1,14 @@
-/**
+/** 
  * @file   	%<%NAME%>%.%<%EXTENSION%>%
  * @author 	%<%USER%>%
- * @version
+ * @version	
  * @date 	%<%DATE%>%, %<%TIME%>%
  * @brief
  */
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
-#include "../inc/configuration_bits.h"
-#include "../inc/main.h"
+#include "../inc/HPT_hard_prog_tact.h"
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
@@ -26,26 +25,18 @@
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
-int main(
-	void)
+void
+HPT_Init_TMRForProg_Tact(
+	uint16_t cnt)
 {
-	/*=== |Begin| --> Секция - "Конфигурирование периферии микроконтроллера" =*/
-	/* Инициализация тактового генератора */
-	PIC_Init_Oscillator_FRC_8MHz_FOSC_128MHz_FCY_64MIPS();
+	unsigned int config = T9_ON & T9_IDLE_CON & T9_PS_1_64 & T9_INT_PRIOR_1 & T9_INT_ON;
+	OpenTimer9(config, cnt);
+}
 
-	/* Инициализация светодиодов платы */
-	BLEDS_Init_AllLeds();
-
-	/* Инициализация UART модуля для передачи отладочной информации */
-	UDI_Init_All_UART3_RxTx_With_DMA_Tx(9600u);
-	/*=== |End  | <-- Секция - "Конфигурирование периферии микроконтроллера" =*/
-
-	/* Loop */
-	while (1)
-	{
-
-	}
-	return (1);
+void  __attribute__ ((__interrupt__, auto_psv))
+_T9Interrupt (void)
+{
+	
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 

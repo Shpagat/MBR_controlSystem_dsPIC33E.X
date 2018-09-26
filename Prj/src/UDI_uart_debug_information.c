@@ -8,7 +8,7 @@
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
-#include "HPT_hard_prog_tact.h"
+#include "../inc/UDI_uart_debug_information.h"
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
@@ -21,23 +21,56 @@
 
 
 /*#### |Begin| --> Секция - "Прототипы локальных функций" ####################*/
+static void
+UDI_Init_UART3_RxTx(
+unsigned int baudrate);
+
+static void
+UDI_Init_IO_Ports(void);
+
+static void
+UDI_Init_DMA_For_Tx(void);
 /*#### |End  | <-- Секция - "Прототипы локальных функций" ####################*/
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 void
-HPT_Init_TMRForProg_Tact(
-	uint16_t cnt)
+UDI_Init_All_UART3_RxTx_With_DMA_Tx(
+unsigned int baudrate)
 {
-	unsigned int config = T9_ON & T9_IDLE_CON & T9_PS_1_64 & T9_INT_PRIOR_1 & T9_INT_ON;
-	OpenTimer9(config, cnt);
+	UDI_Init_IO_Ports();
+	UDI_Init_DMA_For_Tx();
+	UDI_Init_UART3_RxTx(baudrate);
 }
 
-void  __attribute__ ((__interrupt__, auto_psv))
-_T9Interrupt (void)
+void
+UDI_Init_UART3_RxTx(
+unsigned int baudrate)
 {
 	
 }
+
+void
+UDI_Init_IO_Ports(void)
+{
+	
+}
+
+void
+UDI_Init_DMA_For_Tx(void)
+{
+	
+}
+
+void
+UDI_StartForceUartDMATransmit(
+	unsigned int *pMemSrc, 
+	unsigned int cnt)
+{
+	
+}
+
+/* Написать обработчик прерывания */
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
 
