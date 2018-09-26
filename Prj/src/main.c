@@ -38,12 +38,22 @@ int main(
 
 	/* Инициализация UART модуля для передачи отладочной информации */
 	UDI_Init_All_UART3_RxTx_With_DMA_Tx(9600u);
+
+	const unsigned int progTactInUs = 5000U;
+	HPT_Init_TMRForProg_Tact(
+		progTactInUs);
 	/*=== |End  | <-- Секция - "Конфигурирование периферии микроконтроллера" =*/
 
+	_GIE = 1;
 	/* Loop */
 	while (1)
 	{
+		if (HPT_status_s.newProgTactEn_flag != 0)
+		{
+			HPT_status_s.newProgTactEn_flag = 0;
 
+			HPT_status_s.restProgTactTime = progTactInUs - ReadTimer9();
+		}
 	}
 	return (1);
 }

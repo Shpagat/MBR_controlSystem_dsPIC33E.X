@@ -26,6 +26,7 @@
 #include "../inc/BLEDS_board_leds.h"
 #include "../../Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.h"
 #include "../inc/UDI_uart_debug_information.h"
+#include "../inc/HPT_hard_prog_tact.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
