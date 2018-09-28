@@ -26,22 +26,22 @@ mpu60x0_data_s IISMPU_data_s;
 /*#### |Begin| --> Секция - "Прототипы локальных функций" ####################*/
 void
 IISMPU_Init_SPI(
-	void);
+    void);
 
 void
 IISMPU_Init_IO_PortsForSPI(
-	void);
+    void);
 
 void
 IISMPU_Init_MPU6000(
-	void);
+    void);
 /*#### |End  | <-- Секция - "Прототипы локальных функций" ####################*/
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 void
 IISMPU_Init_AllPeriph(
-	void)
+    void)
 {
 	IISMPU_Init_IO_PortsForSPI();
 	IISMPU_Init_SPI();
@@ -55,14 +55,14 @@ IISMPU_Init_AllPeriph(
 /*#### |Begin| --> Секция - "Описание локальных функций" #####################*/
 void
 IISMPU_Init_SPI(
-	void)
+    void)
 {
 	PIC_Init_SPI_1_PriPRES_64_1_SecPRES_1_1_IntDis_8bits();
 }
 
 void
 IISMPU_Init_IO_PortsForSPI(
-	void)
+    void)
 {
 	/* Конфигурирование  CS RB5/AN5/C1IN1+/VBUSON/VBUSST/RPI37 */
 	// <Chip Select> for <MPU6000> - "RB5/AN5/C1IN1+/VBUSON/VBUSST/RPI37";
@@ -114,7 +114,7 @@ IIMPU_Delay_1ms(void)
 
 void
 IISMPU_Init_MPU6000(
-	void)
+    void)
 {
 	IISMPU_SPIFnc_s.CS_Off = IIMPU_SPI_Cs_Off;
 	IISMPU_SPIFnc_s.CS_On = IIMPU_SPI_CS_On;
@@ -133,9 +133,9 @@ IISMPU_Init_MPU6000(
 	mpu6000ConfigRegs_s.pwr_managment_107 = MPU60x0_BIT_CLKSEL_PLL_GYRO_X;
 
 	IISMPU_LSB_s =
-		MPU60x0_SPI_Config(
-			&IISMPU_SPIFnc_s,
-			&mpu6000ConfigRegs_s);
+	    MPU60x0_SPI_Config(
+	        &IISMPU_SPIFnc_s,
+	        &mpu6000ConfigRegs_s);
 }
 /*#### |End  | <-- Секция - "Описание локальных функций" #####################*/
 

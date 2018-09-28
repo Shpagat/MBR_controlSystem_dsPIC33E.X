@@ -37,12 +37,12 @@
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
 extern float
 PCF_GetPitchAngle(
-	float accX,
-	float accZ,
-	float gyrY,
-	float oldAngle,
-	float compFiltCoeff,
-	float dT);
+    float accX,
+    float accZ,
+    float gyrY,
+    float oldAngle,
+    float compFiltCoeff,
+    float dT);
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

@@ -106,6 +106,20 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>.</Elem>
+    <Elem>Prj/inc</Elem>
+    <Elem>Prj/src</Elem>
+    <Elem>Lib_H_PIC_oscillators</Elem>
+    <Elem>Lib_A_CRC_cyclic_redundancy_check</Elem>
+    <Elem>Lib_A_DI_debug_information</Elem>
+    <Elem>Lib_A_DIFF_differentiators</Elem>
+    <Elem>Lib_A_FILT_filters.c</Elem>
+    <Elem>Lib_A_NINTEG_numerical_integration</Elem>
+    <Elem>Lib_A_REGUL_regulators</Elem>
+    <Elem>Lib_A_RGBF_ring_buffer</Elem>
+    <Elem>Lib_A_VTMR_virtual_timers</Elem>
+    <Elem>Lib_H_MPU60x0_inertial_sensor</Elem>
+    <Elem>Lib_H_PIC_spi</Elem>
+    <Elem>Lib_H_PIC_uart</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

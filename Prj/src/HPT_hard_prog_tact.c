@@ -49,7 +49,7 @@ HPT_Init_TMRForProg_Tact(
 void  __attribute__ ((__interrupt__, auto_psv))
 _T9Interrupt (void)
 {
-	IFS3bits.T9IF = 0;  // Clear Timer9 Interrupt Flag
+	IFS3bits.T9IF = 0;  // Clear Timer9 Interrupt Flag```````````````````````````````````
 	HPT_status_s.newProgTactEn_flag++;
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/

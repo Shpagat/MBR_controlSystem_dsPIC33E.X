@@ -27,17 +27,17 @@
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 float
 PCF_GetPitchAngle(
-	float accX,
-	float accZ,
-	float gyrY,
-	float oldAngle,
-	float compFiltCoeff,
-	float dT)
+    float accX,
+    float accZ,
+    float gyrY,
+    float oldAngle,
+    float compFiltCoeff,
+    float dT)
 {
-	/* Получить угол наклона по показаниям акселеромтера */
+	/* Получить угол наклона по показаниям акселерометра */
 	float pitchByAcc = atan2(accX, accZ);
 
-	/* Найти прирщение угла наколна за промежуток времени dT */
+	/* Найти приращение угла наклона за промежуток времени dT */
 	float deltaPitch = gyrY * dT;
 
 	return (((oldAngle + deltaPitch) * compFiltCoeff) + (pitchByAcc * (1 - compFiltCoeff)));
