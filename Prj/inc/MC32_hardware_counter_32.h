@@ -1,25 +1,28 @@
 /**
- * @file   	%<%NAME%>%.%<%EXTENSION%>%
- * @author 	%<%USER%>%
+ * @file   	MC32_hardware_counter_32.
+ * @author 	Kuroha
  * @version
- * @date 	%<%DATE%>%, %<%TIME%>%
+ * @date 	26 сентября 2018 г., 17:45
  * @brief
  */
 
 
-#ifndef UDI_UART_DEBUG_INFORMATION_H
-#define UDI_UART_DEBUG_INFORMATION_H
+#ifndef MC32_HARDWARE_COUNTER_32_H_
+#define MC32_HARDWARE_COUNTER_32_H_
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
+#include <stdio.h>
 /*==== |End  | <-- Секция - "C libraries" ====================================*/
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
 #include <xc.h>
+#include <timer.h>
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
+#include "../../Lib_A_VTMR_virtual_timers/Lib_A_VTMR_virtual_timers.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -38,20 +41,15 @@
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
 extern void
-UDI_Init_All_UART3_RxTx_With_DMA_Tx(
-    unsigned int baudrate);
-
-extern void
-UDI_StartForceUartDMATransmit(
-    unsigned int *pMemSrc,
-    unsigned int cnt);
+MC32_Init_32bitsCntForVirtTimers(
+	void);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 
 /*#### |Begin| --> Секция - "Определение макросов" ###########################*/
 /*#### |End  | <-- Секция - "Определение макросов" ###########################*/
 
-#endif	/* UDI_UART_DEBUG_INFORMATION_H */
+#endif	/* MC32_HARDWARE_COUNTER_32_H_ */
 
 /*############################################################################*/
 /*################################ END OF FILE ###############################*/

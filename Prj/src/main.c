@@ -27,7 +27,7 @@
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 int main(
-	void)
+    void)
 {
 	/*=== |Begin| --> Секция - "Конфигурирование периферии микроконтроллера" =*/
 	/* Инициализация тактового генератора */
@@ -39,9 +39,16 @@ int main(
 	/* Инициализация UART модуля для передачи отладочной информации */
 	UDI_Init_All_UART3_RxTx_With_DMA_Tx(9600u);
 
-	const unsigned int progTactInUs = 5000U;
+	/* Инициализация аппаратного таймера для тактирования цикла while(1) */
 	HPT_Init_TMRForProg_Tact(
-		progTactInUs);
+	    __HARD_PROG_TACT_IN_US__);
+
+	/* Инициализация аппаратных таймеров для подключения в ним виртуальных
+	 * таймеров */
+	MC32_Init_32bitsCntForVirtTimers();
+
+	/* Инициализация всей периферии для работы с внутренним инерциальным датчиком */
+	IISMPU_Init_AllPeriph();
 	/*=== |End  | <-- Секция - "Конфигурирование периферии микроконтроллера" =*/
 
 	_GIE = 1;
@@ -52,7 +59,7 @@ int main(
 		{
 			HPT_status_s.newProgTactEn_flag = 0;
 
-			HPT_status_s.restProgTactTime = progTactInUs - ReadTimer9();
+			HPT_status_s.restProgTactTime = __HARD_PROG_TACT_IN_US__ - ReadTimer9();
 		}
 	}
 	return (1);

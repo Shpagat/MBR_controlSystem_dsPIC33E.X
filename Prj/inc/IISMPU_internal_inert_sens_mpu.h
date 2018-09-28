@@ -1,14 +1,14 @@
 /**
- * @file   	%<%NAME%>%.%<%EXTENSION%>%
- * @author 	%<%USER%>%
+ * @file   	IISMPU_internal_inert_sens_mpu.
+ * @author 	Kuroha
  * @version
- * @date 	%<%DATE%>%, %<%TIME%>%
+ * @date 	28 сентября 2018 г., 10:54
  * @brief
  */
 
 
-#ifndef UDI_UART_DEBUG_INFORMATION_H
-#define UDI_UART_DEBUG_INFORMATION_H
+#ifndef IISMPU_INTERNAL_INERT_SENS_MPU_H_
+#define IISMPU_INTERNAL_INERT_SENS_MPU_H_
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
@@ -17,9 +17,13 @@
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
 #include <xc.h>
+#include <libpic30.h>
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
+#include "../../Lib_H_MPU60x0_inertial_sensor/Lib_H_mpu60x0_inertial_sensor.h"
+#include "../../Lib_H_PIC_spi/Lib_H_PIC_spi.h"
+#include "../inc/main.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -38,20 +42,15 @@
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
 extern void
-UDI_Init_All_UART3_RxTx_With_DMA_Tx(
-    unsigned int baudrate);
-
-extern void
-UDI_StartForceUartDMATransmit(
-    unsigned int *pMemSrc,
-    unsigned int cnt);
+IISMPU_Init_AllPeriph(
+	void);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 
 /*#### |Begin| --> Секция - "Определение макросов" ###########################*/
 /*#### |End  | <-- Секция - "Определение макросов" ###########################*/
 
-#endif	/* UDI_UART_DEBUG_INFORMATION_H */
+#endif	/* IISMPU_INTERNAL_INERT_SENS_MPU_H_ */
 
 /*############################################################################*/
 /*################################ END OF FILE ###############################*/

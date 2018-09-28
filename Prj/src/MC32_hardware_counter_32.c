@@ -1,14 +1,14 @@
 /**
- * @file   	%<%NAME%>%.%<%EXTENSION%>%
- * @author 	%<%USER%>%
+ * @file   	MC32_hardware_counter_32.c
+ * @author 	Kuroha
  * @version
- * @date 	%<%DATE%>%, %<%TIME%>%
+ * @date 	26 сентября 2018 г., 17:45
  * @brief
  */
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
-#include "../inc/UDI_uart_debug_information.h"
+#include "../inc/MC32_hardware_counter_32.h"
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
@@ -21,56 +21,27 @@
 
 
 /*#### |Begin| --> Секция - "Прототипы локальных функций" ####################*/
-static void
-UDI_Init_UART3_RxTx(
-    unsigned int baudrate);
-
-static void
-UDI_Init_IO_Ports(void);
-
-static void
-UDI_Init_DMA_For_Tx(void);
 /*#### |End  | <-- Секция - "Прототипы локальных функций" ####################*/
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 void
-UDI_Init_All_UART3_RxTx_With_DMA_Tx(
-    unsigned int baudrate)
+MC32_Init_32bitsCntForVirtTimers(
+    void)
 {
-	UDI_Init_IO_Ports();
-	UDI_Init_DMA_For_Tx();
-	UDI_Init_UART3_RxTx(baudrate);
+	unsigned int config =
+	    T6_ON
+	    & T6_SOURCE_INT
+	    & T6_IDLE_CON
+	    & T7_IDLE_STOP
+	    & T6_PS_1_64
+	    & T6_GATE_OFF
+	    & T6_32BIT_MODE_ON;
+
+	OpenTimer67(
+	    config,
+	    0xFFFFFFFF);
 }
-
-void
-UDI_Init_UART3_RxTx(
-    unsigned int baudrate)
-{
-
-}
-
-void
-UDI_Init_IO_Ports(void)
-{
-
-}
-
-void
-UDI_Init_DMA_For_Tx(void)
-{
-
-}
-
-void
-UDI_StartForceUartDMATransmit(
-    unsigned int *pMemSrc,
-    unsigned int cnt)
-{
-
-}
-
-/* Написать обработчик прерывания */
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
 
