@@ -1,41 +1,33 @@
 /**
- * @file   	%<%NAME%>%.%<%EXTENSION%>%
- * @author 	%<%USER%>%
+ * @file   	MC32_hardware_counter_32.
+ * @author 	Kuroha
  * @version
- * @date 	%<%DATE%>%, %<%TIME%>%
+ * @date 	26 сентября 2018 г., 17:45
  * @brief
  */
 
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef MC32_HARDWARE_COUNTER_32_H_
+#define MC32_HARDWARE_COUNTER_32_H_
 
-#define FCY                             64000000U
+
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
 #include <stdio.h>
-#include <stdint.h>
-#include <math.h>
 /*==== |End  | <-- Секция - "C libraries" ====================================*/
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
 #include <xc.h>
+#include <timer.h>
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
-#include "../inc/BLEDS_board_leds.h"
-#include "../../Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.h"
-#include "../inc/UDI_uart_debug_information.h"
-#include "../inc/HPT_hard_prog_tact.h"
-#include "../inc/MC32_hardware_counter_32.h"
-#include "../inc/IISMPU_internal_inert_sens_mpu.h"
+#include "../../Lib_A_VTMR_virtual_timers/Lib_A_VTMR_virtual_timers.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
 /*#### |Begin| --> Секция - "Определение констант" ###########################*/
-//#define __DI_MAX_PLOTS_IN_PACKAGE__ 30
-//#define __REGUL_FLOAT_POINT_TYPE__ float
 /*#### |End  | <-- Секция - "Определение констант" ###########################*/
 
 
@@ -48,13 +40,16 @@
 
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
+extern void
+MC32_Init_TMRForProg_Tact(
+	void);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 
 /*#### |Begin| --> Секция - "Определение макросов" ###########################*/
 /*#### |End  | <-- Секция - "Определение макросов" ###########################*/
 
-#endif	/* MAIN_H_ */
+#endif	/* MC32_HARDWARE_COUNTER_32_H_ */
 
 /*############################################################################*/
 /*################################ END OF FILE ###############################*/

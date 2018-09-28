@@ -1,41 +1,34 @@
 /**
- * @file   	%<%NAME%>%.%<%EXTENSION%>%
- * @author 	%<%USER%>%
+ * @file   	IISMPU_internal_inert_sens_mpu.
+ * @author 	Kuroha
  * @version
- * @date 	%<%DATE%>%, %<%TIME%>%
+ * @date 	28 сентября 2018 г., 10:54
  * @brief
  */
 
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef IISMPU_INTERNAL_INERT_SENS_MPU_H_
+#define IISMPU_INTERNAL_INERT_SENS_MPU_H_
 
-#define FCY                             64000000U
+
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
 /*==== |End  | <-- Секция - "C libraries" ====================================*/
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
 #include <xc.h>
+#include <libpic30.h>
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
-#include "../inc/BLEDS_board_leds.h"
-#include "../../Lib_H_PIC_oscillators/Lib_H_PIC_oscillators.h"
-#include "../inc/UDI_uart_debug_information.h"
-#include "../inc/HPT_hard_prog_tact.h"
-#include "../inc/MC32_hardware_counter_32.h"
-#include "../inc/IISMPU_internal_inert_sens_mpu.h"
+#include "../../Lib_H_MPU60x0_inertial_sensor/Lib_H_mpu60x0_inertial_sensor.h"
+#include "../../Lib_H_PIC_spi/Lib_H_PIC_spi.h"
+#include "../inc/main.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
 /*#### |Begin| --> Секция - "Определение констант" ###########################*/
-//#define __DI_MAX_PLOTS_IN_PACKAGE__ 30
-//#define __REGUL_FLOAT_POINT_TYPE__ float
 /*#### |End  | <-- Секция - "Определение констант" ###########################*/
 
 
@@ -48,13 +41,16 @@
 
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
+extern void
+IISMPU_Init_AllPeriph(
+	void);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 
 /*#### |Begin| --> Секция - "Определение макросов" ###########################*/
 /*#### |End  | <-- Секция - "Определение макросов" ###########################*/
 
-#endif	/* MAIN_H_ */
+#endif	/* IISMPU_INTERNAL_INERT_SENS_MPU_H_ */
 
 /*############################################################################*/
 /*################################ END OF FILE ###############################*/
