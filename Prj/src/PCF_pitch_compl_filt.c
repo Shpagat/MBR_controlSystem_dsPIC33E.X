@@ -1,14 +1,14 @@
 /**
- * @file   	MC32_hardware_counter_32.c
- * @author 	Kuroha
+ * @file    PCF_pitch_compl_filt.c
+ * @author  Kuroha
  * @version
- * @date 	26 сентября 2018 г., 17:45
+ * @date    28 сентября 2018 г., 12:55
  * @brief
  */
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
-#include "../inc/MC32_hardware_counter_32.h"
+#include "../inc/PCF_pitch_compl_filt.h"
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
@@ -25,22 +25,22 @@
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
-void
-MC32_Init_32bitsCntForVirtTimers(
-	void)
+float
+PCF_GetPitchAngle(
+	float accX,
+	float accZ,
+	float gyrY,
+	float oldAngle,
+	float compFiltCoeff,
+	float dT)
 {
-	unsigned int config =
-		T6_ON
-		& T6_SOURCE_INT
-		& T6_IDLE_CON
-		& T7_IDLE_STOP
-		& T6_PS_1_64
-		& T6_GATE_OFF
-		& T6_32BIT_MODE_ON;
+	/* Получить угол наклона по показаниям акселеромтера */
+	float pitchByAcc = atan2(accX, accZ);
 
-	OpenTimer67(
-		config,
-		0xFFFFFFFF);
+	/* Найти прирщение угла наколна за промежуток времени dT */
+	float deltaPitch = gyrY * dT;
+
+	return (((oldAngle + deltaPitch) * compFiltCoeff) + (pitchByAcc * (1 - compFiltCoeff)));
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
