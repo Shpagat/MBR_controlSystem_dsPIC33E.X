@@ -89,7 +89,48 @@ UDI_StartForceUartDMATransmit(
 	unsigned int *pMemSrc, 
 	unsigned int cnt)
 {
-	
+    size_t DMA3_CompleteFlag = 1;
+	void Start_DMA3_UART3TX(unsigned int cntBytes)
+{
+	if (DMA3_CompleteFlag == 1)
+	{
+		unsigned int trash = U2TXREG;
+		trash = U3TXREG;
+		trash = U3TXREG;
+		trash = U3TXREG;
+
+		/* Сброс флага Overrun модуля UART */
+		U3STAbits.OERR = 0;
+
+		// Выставка количества байт, которое необходимо передать;
+		DMA3CNTbits.CNT = cntBytes - 1;
+
+		// Старт канала DMA;
+		DMA3CONbits.CHEN = 1;
+		DMA3REQbits.FORCE = 1;
+
+		// Сброс флага завершения работы канала DMA;
+		DMA3_CompleteFlag = 0;
+	}
+}
+    
+    void __attribute__ ((__interrupt__, no_auto_psv))
+_DMA3Interrupt (void)
+{
+	// Сброс флага прерывания;
+	IFS2bits.DMA3IF = 0;
+
+#if defined (__GET_RUN_TIME_VALUES__)
+	// Расчет времени работы канала DMA2;
+	runTimeStruct.sendDebugPackage = VTMR_GetMaxTimerValue (&dma3CntStruct);
+#endif
+
+	/* Отключение канала DMA */
+	DMA3CONbits.CHEN = 0;
+
+	// Флаг завершения работы канала DMA3;
+	DMA3_CompleteFlag = 1;
+}
 }
 
 /* Написать обработчик прерывания */

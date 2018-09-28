@@ -1,8 +1,8 @@
-/** 
- * @file   	%<%NAME%>%.%<%EXTENSION%>%
- * @author 	%<%USER%>%
- * @version	
- * @date 	%<%DATE%>%, %<%TIME%>%
+/**
+ * @file    %<%NAME%>%.%<%EXTENSION%>%
+ * @author  %<%USER%>%
+ * @version
+ * @date    %<%DATE%>%, %<%TIME%>%
  * @brief
  */
 
@@ -13,6 +13,7 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
+hpt_status_s HPT_status_s;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -27,16 +28,29 @@
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 void
 HPT_Init_TMRForProg_Tact(
-	uint16_t cnt)
+	unsigned int cnt)
 {
-	unsigned int config = T9_ON & T9_IDLE_CON & T9_PS_1_64 & T9_INT_PRIOR_1 & T9_INT_ON;
-	OpenTimer9(config, cnt);
+	unsigned int config =
+		T9_ON
+		& T9_SOURCE_INT
+		& T9_IDLE_CON
+		& T9_PS_1_64
+		& T9_GATE_OFF;
+
+	OpenTimer9(
+		config,
+		cnt);
+
+	ConfigIntTimer9(
+		T9_INT_PRIOR_1
+		& T9_INT_ON);
 }
 
 void  __attribute__ ((__interrupt__, auto_psv))
 _T9Interrupt (void)
 {
-	
+	IFS3bits.T9IF = 0;  // Clear Timer9 Interrupt Flag
+	HPT_status_s.newProgTactEn_flag++;
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
