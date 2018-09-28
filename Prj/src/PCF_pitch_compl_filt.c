@@ -1,19 +1,18 @@
 /**
- * @file    %<%NAME%>%.%<%EXTENSION%>%
- * @author  %<%USER%>%
+ * @file    PCF_pitch_compl_filt.c
+ * @author  Kuroha
  * @version
- * @date    %<%DATE%>%, %<%TIME%>%
+ * @date    28 сентября 2018 г., 12:55
  * @brief
  */
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
-#include "../inc/HPT_hard_prog_tact.h"
+#include "../inc/PCF_pitch_compl_filt.h"
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
-hpt_status_s HPT_status_s;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -26,31 +25,22 @@ hpt_status_s HPT_status_s;
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
-void
-HPT_Init_TMRForProg_Tact(
-	unsigned int cnt)
+float
+PCF_GetPitchAngle(
+    float accX,
+    float accZ,
+    float gyrY,
+    float oldAngle,
+    float compFiltCoeff,
+    float dT)
 {
-	unsigned int config =
-		T9_ON
-		& T9_SOURCE_INT
-		& T9_IDLE_CON
-		& T9_PS_1_64
-		& T9_GATE_OFF;
+	/* Получить угол наклона по показаниям акселерометра */
+	float pitchByAcc = atan2(accX, accZ);
 
-	OpenTimer9(
-		config,
-		cnt);
+	/* Найти приращение угла наклона за промежуток времени dT */
+	float deltaPitch = gyrY * dT;
 
-	ConfigIntTimer9(
-		T9_INT_PRIOR_1
-		& T9_INT_ON);
-}
-
-void  __attribute__ ((__interrupt__, auto_psv))
-_T9Interrupt (void)
-{
-	IFS3bits.T9IF = 0;  // Clear Timer9 Interrupt Flag```````````````````````````````````
-	HPT_status_s.newProgTactEn_flag++;
+	return (((oldAngle + deltaPitch) * compFiltCoeff) + (pitchByAcc * (1 - compFiltCoeff)));
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 

@@ -37,6 +37,9 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
+extern mpu60x0_spi_s IISMPU_SPIFnc_s;
+extern mpu60x0_lsb_s IISMPU_LSB_s;
+extern mpu60x0_data_s IISMPU_data_s;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

@@ -11,6 +11,7 @@
       <itemPath>Prj/inc/UDI_uart_debug_information.h</itemPath>
       <itemPath>Prj/inc/MC32_hardware_counter_32.h</itemPath>
       <itemPath>Prj/inc/IISMPU_internal_inert_sens_mpu.h</itemPath>
+      <itemPath>Prj/inc/PCF_pitch_compl_filt.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2"
                    displayName="Lib_A_CRC_cyclic_redundancy_check"
@@ -95,6 +96,7 @@
       <itemPath>Prj/src/UDI_uart_debug_information.c</itemPath>
       <itemPath>Prj/src/MC32_hardware_counter_32.c</itemPath>
       <itemPath>Prj/src/IISMPU_internal_inert_sens_mpu.c</itemPath>
+      <itemPath>Prj/src/PCF_pitch_compl_filt.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -104,6 +106,20 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>.</Elem>
+    <Elem>Prj/inc</Elem>
+    <Elem>Prj/src</Elem>
+    <Elem>Lib_H_PIC_oscillators</Elem>
+    <Elem>Lib_A_CRC_cyclic_redundancy_check</Elem>
+    <Elem>Lib_A_DI_debug_information</Elem>
+    <Elem>Lib_A_DIFF_differentiators</Elem>
+    <Elem>Lib_A_FILT_filters.c</Elem>
+    <Elem>Lib_A_NINTEG_numerical_integration</Elem>
+    <Elem>Lib_A_REGUL_regulators</Elem>
+    <Elem>Lib_A_RGBF_ring_buffer</Elem>
+    <Elem>Lib_A_VTMR_virtual_timers</Elem>
+    <Elem>Lib_H_MPU60x0_inertial_sensor</Elem>
+    <Elem>Lib_H_PIC_spi</Elem>
+    <Elem>Lib_H_PIC_uart</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -336,6 +352,7 @@
         <property key="UART 4" value="true"/>
         <property key="USB" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

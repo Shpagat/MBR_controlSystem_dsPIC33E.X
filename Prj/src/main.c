@@ -18,10 +18,16 @@
 
 
 /*#### |Begin| --> Секция - "Локальные переменные" ###########################*/
+float pitchAngle;
+
+VTMR_tmr_s compFiltRuntime_s;
 /*#### |End  | <-- Секция - "Локальные переменные" ###########################*/
 
 
 /*#### |Begin| --> Секция - "Прототипы локальных функций" ####################*/
+static void
+SetNEDCoordinateSystem(
+    float pData[]);
 /*#### |End  | <-- Секция - "Прототипы локальных функций" ####################*/
 
 
@@ -51,6 +57,11 @@ int main(
 	IISMPU_Init_AllPeriph();
 	/*=== |End  | <-- Секция - "Конфигурирование периферии микроконтроллера" =*/
 
+	VTMR_InitTimerStruct(
+	    &compFiltRuntime_s,
+	    (uint16_t*) &TMR7,
+	    (uint16_t*) &TMR6);
+
 	_GIE = 1;
 	/* Loop */
 	while (1)
@@ -59,10 +70,38 @@ int main(
 		{
 			HPT_status_s.newProgTactEn_flag = 0;
 
+			/* Опрос инерциального датчика */
+			MPU60x0_SPI_GetAllNormData(
+			    &IISMPU_SPIFnc_s,
+			    &IISMPU_data_s,
+			    &IISMPU_LSB_s);
+
+			/* Приведение показаний инерциального датчика к NED системе кординат */
+			SetNEDCoordinateSystem(&IISMPU_data_s.accelArr[1]);
+			SetNEDCoordinateSystem(&IISMPU_data_s.gyrArr[1]);
+
+			VTMR_StartTimer(&compFiltRuntime_s);
+			pitchAngle =
+			    PCF_GetPitchAngle(
+			        IISMPU_data_s.accelArr[1],
+			        IISMPU_data_s.accelArr[3],
+			        IISMPU_data_s.gyrArr[2],
+			        pitchAngle,
+			        0.95f,
+			        INTEGRATE_PERIOD_IN_SEC);
+			VTMR_GetTimerValue(&compFiltRuntime_s);
+
 			HPT_status_s.restProgTactTime = __HARD_PROG_TACT_IN_US__ - ReadTimer9();
 		}
 	}
 	return (1);
+}
+
+void
+SetNEDCoordinateSystem(
+    float pData[])
+{
+	pData[0] = -pData[0];
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
