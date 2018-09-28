@@ -1,7 +1,7 @@
-/** 
+/**
  * @file   	%<%NAME%>%.%<%EXTENSION%>%
  * @author 	%<%USER%>%
- * @version	
+ * @version
  * @date 	%<%DATE%>%, %<%TIME%>%
  * @brief
  */
@@ -23,7 +23,7 @@
 /*#### |Begin| --> Секция - "Прототипы локальных функций" ####################*/
 static void
 UDI_Init_UART3_RxTx(
-unsigned int baudrate);
+    unsigned int baudrate);
 
 static void
 UDI_Init_IO_Ports(void);
@@ -36,7 +36,7 @@ UDI_Init_DMA_For_Tx(void);
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 void
 UDI_Init_All_UART3_RxTx_With_DMA_Tx(
-unsigned int baudrate)
+    unsigned int baudrate)
 {
 	UDI_Init_IO_Ports();
 	UDI_Init_DMA_For_Tx();
@@ -45,29 +45,29 @@ unsigned int baudrate)
 
 void
 UDI_Init_UART3_RxTx(
-unsigned int baudrate)
+    unsigned int baudrate)
 {
-	
+
 }
 
 void
 UDI_Init_IO_Ports(void)
 {
-	
+
 }
 
 void
 UDI_Init_DMA_For_Tx(void)
 {
-	
+
 }
 
 void
 UDI_StartForceUartDMATransmit(
-	unsigned int *pMemSrc, 
-	unsigned int cnt)
+    unsigned int *pMemSrc,
+    unsigned int cnt)
 {
-	
+
 }
 
 /* Написать обработчик прерывания */

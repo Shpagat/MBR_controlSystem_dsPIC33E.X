@@ -1,7 +1,7 @@
-/** 
+/**
  * @file   	%<%NAME%>%.%<%EXTENSION%>%
  * @author 	%<%USER%>%
- * @version	
+ * @version
  * @date 	%<%DATE%>%, %<%TIME%>%
  * @brief
  */
@@ -39,12 +39,12 @@
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
 extern void
 UDI_Init_All_UART3_RxTx_With_DMA_Tx(
-unsigned int baudrate);
+    unsigned int baudrate);
 
 extern void
 UDI_StartForceUartDMATransmit(
-	unsigned int *pMemSrc, 
-	unsigned int cnt);
+    unsigned int *pMemSrc,
+    unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 

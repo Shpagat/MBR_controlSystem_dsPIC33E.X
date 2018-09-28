@@ -26,21 +26,21 @@
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 void
-MC32_Init_TMRForProg_Tact(
-	void)
+MC32_Init_32bitsCntForVirtTimers(
+    void)
 {
 	unsigned int config =
-		T6_ON
-		& T6_SOURCE_INT
-		& T6_IDLE_CON
-		& T7_IDLE_STOP
-		& T6_PS_1_64
-		& T6_GATE_OFF
-		& T6_32BIT_MODE_ON;
+	    T6_ON
+	    & T6_SOURCE_INT
+	    & T6_IDLE_CON
+	    & T7_IDLE_STOP
+	    & T6_PS_1_64
+	    & T6_GATE_OFF
+	    & T6_32BIT_MODE_ON;
 
 	OpenTimer67(
-		config,
-		0xFFFFFFFF);
+	    config,
+	    0xFFFFFFFF);
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
