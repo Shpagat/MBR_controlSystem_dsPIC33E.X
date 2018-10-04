@@ -49,7 +49,7 @@ void
 UDI_Init_UART3_RxTx(
 	unsigned int baudrate)
 {
-	PIC_Init_USART_3_1StopBit_8BitData_RxIntEnChar_TxIntEnChar (
+	PIC_Init_USART_3_1StopBit_8BitData_RxIntEnChar_TxIntEnChar(
 		FCY,
 		baudrate);
 }
@@ -76,7 +76,8 @@ UDI_Init_IO_Ports(void)
 }
 
 void
-UDI_Init_DMA3_For_Uart3Tx(void)
+UDI_Init_DMA3_For_Uart3Tx(
+void)
 {
 	CloseDMA3();
 
