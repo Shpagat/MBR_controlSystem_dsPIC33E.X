@@ -17,9 +17,13 @@
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
 #include <xc.h>
+#include <dma.h>
+#include <uart.h>
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
+#include "../../Prj/inc/main.h"
+#include "../../Lib_H_PIC_uart/Lib_H_PIC_uart.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -39,12 +43,17 @@
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
 extern void
 UDI_Init_All_UART3_RxTx_With_DMA_Tx(
-    unsigned int baudrate);
+	unsigned int baudrate);
 
 extern void
 UDI_StartForceUartDMATransmit(
-    unsigned int *pMemSrc,
-    unsigned int cnt);
+	unsigned int *pMemSrc,
+	unsigned int cnt);
+
+extern void
+UDI_StartUartDMATransmit(
+	unsigned int *pMemSrc,
+	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 
