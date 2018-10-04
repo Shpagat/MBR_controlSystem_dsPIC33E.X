@@ -10,7 +10,7 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-#define FCY                             64000000U
+#define FCY                             64000000UL
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
 #include <stdio.h>
@@ -49,6 +49,7 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
+//extern DI_data_for_serial_plot_s serialPlotDebugPackage_s __attribute__((space(xmemory)));
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 
