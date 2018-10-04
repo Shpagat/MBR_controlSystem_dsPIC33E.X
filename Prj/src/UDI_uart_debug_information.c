@@ -147,6 +147,30 @@ UDI_StartForceUart3_DMA3_Transmit(
 	DMA3REQbits.FORCE = 1;
 }
 
+void __attribute__ ((__interrupt__, auto_psv))
+_U3TXInterrupt (void)
+{
+	// Сброс флага прерывания;
+	IFS5bits.U3TXIF = 0;
+}
+
+
+void __attribute__ ((__interrupt__, auto_psv))
+_U3RXInterrupt (void)
+{
+	// Сброс флага прерывания;
+	IFS5bits.U3RXIF = 0;
+}
+
+void __attribute__ ((__interrupt__, no_auto_psv))
+_DMA3Interrupt (void)
+{
+	// Сброс флага прерывания;
+	IFS2bits.DMA3IF = 0;
+
+	/* Отключение канала DMA */
+	DMA3CONbits.CHEN = 0;
+}
 /* Написать обработчик прерывания */
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 

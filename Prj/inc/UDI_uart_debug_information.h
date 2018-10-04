@@ -46,12 +46,12 @@ UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 	unsigned int baudrate);
 
 extern void
-UDI_StartForceUartDMATransmit(
+UDI_StartForceUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt);
 
 extern void
-UDI_StartUartDMATransmit(
+UDI_StartUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/

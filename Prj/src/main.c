@@ -91,6 +91,12 @@ int main(
 			        INTEGRATE_PERIOD_IN_SEC);
 			VTMR_GetTimerValue(&compFiltRuntime_s);
 
+			char testMessage[] = "Hello World";
+			U3TXREG = 0xAA;
+//			UDI_StartUart3_DMA3_Transmit(
+//				(unsigned int) testMessage, 
+//				strlen(testMessage));
+			
 			HPT_status_s.restProgTactTime = __HARD_PROG_TACT_IN_US__ - ReadTimer9();
 		}
 	}
