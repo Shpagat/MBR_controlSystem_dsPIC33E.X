@@ -10,12 +10,13 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-#define FCY                             64000000U
+#define FCY                             64000000UL
 /*#### |Begin| --> Секция - "Include" ########################################*/
 /*==== |Begin| --> Секция - "C libraries" ====================================*/
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
+#include <string.h>
 /*==== |End  | <-- Секция - "C libraries" ====================================*/
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
@@ -31,6 +32,7 @@
 #include "../inc/IISMPU_internal_inert_sens_mpu.h"
 #include "../inc/PCF_pitch_compl_filt.h"
 #include "../../Lib_A_VTMR_virtual_timers/Lib_A_VTMR_virtual_timers.h"
+#include "../inc/UDI_uart_debug_information.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -47,6 +49,9 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
+extern float acc_a[3];
+extern float gyr_a[3];
+extern float mpuTemperature;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

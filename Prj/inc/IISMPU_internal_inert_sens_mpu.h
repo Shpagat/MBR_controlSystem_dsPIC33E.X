@@ -33,6 +33,19 @@
 
 
 /*#### |Begin| --> Секция - "Определение типов" ##############################*/
+typedef enum
+{
+	IISMPU_ROLL = 0,
+	IISMPU_PITCH,
+	IISMPU_YAW,
+
+	/**
+	 * @brief Данное определение должно быть крайним в данном перечисляемом типе.
+	 *        Оно используется для определения размеров векторов показаний
+	 *        инерциального датчика
+	 */
+	IISMPU_VECT_SIZE,
+} iismpu_coordinate_system_definitions_s;
 /*#### |End  | <-- Секция - "Определение типов" ##############################*/
 
 
@@ -45,8 +58,18 @@ extern mpu60x0_data_s IISMPU_data_s;
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
 extern void
-IISMPU_Init_AllPeriph(
+IISMPU_Init_AllPeriphForInternalMPU6000(
 	void);
+
+extern void
+IISMPU_GetAccGyrTemperature(
+	float *pAcc,
+	float *pGyr,
+	float *pTemperature);
+
+extern void
+IISMPU_SetNEDCoordinateSystem(
+	float pData[]);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 
