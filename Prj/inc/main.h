@@ -49,7 +49,9 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
-//extern DI_data_for_serial_plot_s serialPlotDebugPackage_s __attribute__((space(xmemory)));
+extern float acc_a[3];
+extern float gyr_a[3];
+extern float mpuTemperature;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

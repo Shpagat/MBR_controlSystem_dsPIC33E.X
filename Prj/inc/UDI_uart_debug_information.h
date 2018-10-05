@@ -25,6 +25,7 @@
 #include "../../Prj/inc/main.h"
 #include "../../Lib_H_PIC_uart/Lib_H_PIC_uart.h"
 #include "../../Lib_A_DI_debug_information/Lib_A_DI_debug_information.h"
+#include "../inc/IISMPU_internal_inert_sens_mpu.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -38,11 +39,15 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
-extern DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((space(xmemory)));
+extern DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((eds,space(dma)));
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
+extern void
+UDI_GetAndSendDebugPackForSerialPlot(
+	DI_data_for_serial_plot_s *p_s);
+
 extern void
 UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 	unsigned int long fcy,

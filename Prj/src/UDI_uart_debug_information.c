@@ -13,7 +13,7 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
-DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((space(xmemory)));
+DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((eds,space(dma)));
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -39,6 +39,35 @@ UDI_Init_DMA3_For_Uart3Tx(
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
 void
+UDI_GetAndSendDebugPackForSerialPlot(
+	DI_data_for_serial_plot_s *p_s)
+{
+	DI_CopyDataForSerialPlot_f32(
+
+		/* Указатель на структуру данных отладочного пакета данных */
+		p_s,
+
+		/* Показания акселерометра */
+		acc_a[IISMPU_ROLL],
+		acc_a[IISMPU_PITCH],
+		acc_a[IISMPU_YAW],
+
+		/* Показания гироскопа */
+		gyr_a[IISMPU_ROLL],
+		gyr_a[IISMPU_PITCH],
+		gyr_a[IISMPU_YAW],
+
+		/* Терминальный символ, должен быть крайним параметром для
+		 * функции DI_CopyDataForSerialPlot_f32() */
+		(float) DI_TERMINAL_SYMBOL);
+
+	/* Запуск канала DMA для передачи отладочного пакета данных */
+	UDI_StartUart3_DMA3_Transmit(
+		(unsigned int*) p_s,
+		(unsigned int) sizeof(*p_s));
+}
+
+void
 UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 	unsigned int long fcy,
 	unsigned int long baudrate)
@@ -50,7 +79,6 @@ UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 		baudrate);
 
 	UDI_Init_DMA3_For_Uart3Tx();
-
 }
 
 static void
@@ -110,52 +138,24 @@ static void
 UDI_Init_DMA3_For_Uart3Tx(
 	void)
 {
-//	CloseDMA3();
-//
-//	// UART3TX – UART3 Transmitter 01010011 — 0x0254 (U3TXREG)
-//	unsigned int config_ =
-//		DMA3_MODULE_ON
-//		& DMA3_SIZE_BYTE
-//		& DMA3_TO_PERIPHERAL
-//		& DMA3_INTERRUPT_BLOCK
-//		& DMA3_NORMAL
-//		& DMA3_REGISTER_POST_INCREMENT
-//		& DMA3_ONE_SHOT;
-//
-//	unsigned int irq_ = DMA3_AUTOMATIC;
-//
-//	unsigned int sta_address = (0x0000);
-//
-//	unsigned int stb_address = (0x0000);
-//
-//	unsigned int pad_address = (volatile unsigned int) &U3TXREG;
-//
-//	unsigned int count = 1;
-//
-//	OpenDMA3(config_, irq_, sta_address, stb_address, pad_address, count);
-////
-//	ConfigIntDMA3(DMA3_INT_PRI_7 & DMA3_INT_ENABLE);
-////
-////	//  UART3TX – UART3 Transmitter
-//	DMA3REQbits.IRQSEL = 0b01010011;
-//	DMA3CONbits.CHEN = 0;
-
 	DMA3CONbits.AMODE = 0; //	Configure DMA for Register Indirect mode
 //								with post-increment
 	DMA3CONbits.SIZE = 1;
 	DMA3CONbits.MODE = 0; // Configure DMA for Continuous mode
 	DMA3CONbits.DIR = 1; // RAM-to-Peripheral data transfers
-	DMA3CNT = 7; // 8 DMA Requests
+	DMA3CNT = 0;
 	DMA3REQ = 0x0053; // Select UART3 Transmitter
 	DMA3PAD = (volatile unsigned int) &U3TXREG;
 	DMA3STAL = 0x0000;
 	DMA3STAH = 0x0000;
 	DMA3STBL = 0x0000;
 	DMA3STBH = 0x0000;
-	//  UART3TX – UART3 Transmitter
+	
+	/*  UART3TX – UART3 Transmitter */
 	DMA3REQbits.IRQSEL = 0b01010011;
-	IFS0bits.DMA0IF = 0; // Clear DMA Interrupt Flag
-	IEC0bits.DMA0IE = 1; // Enable DMA Interrupt
+	
+	IFS2bits.DMA3IF = 0; // Clear DMA Interrupt Flag
+	IEC2bits.DMA3IE = 1; // Enable DMA Interrupt
 }
 
 void
@@ -177,17 +177,17 @@ UDI_StartForceUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt)
 {
-//	unsigned int trash = U3TXREG;
-//	trash = U3TXREG;
-//	trash = U3TXREG;
-//	trash = U3TXREG;
+	unsigned int trash = U3TXREG;
+	trash = U3TXREG;
+	trash = U3TXREG;
+	trash = U3TXREG;
 
 	/* Сброс флага Overrun модуля UART */
-//	U3STAbits.OERR = 0;
+	U3STAbits.OERR = 0;
 
 	/* Присваивание адреса в памяти */
 	DMA3STAL = (unsigned int)pMemSrc;
-	DMA3STAH = (unsigned int)pMemSrc;
+//	DMA3STAH = (unsigned int)pMemSrc;
 
 	// Выставка количества байт, которое необходимо передать;
 	DMA3CNTbits.CNT = cnt - 1;
@@ -212,7 +212,7 @@ _U3RXInterrupt (void)
 	IFS5bits.U3RXIF = 0;
 }
 
-void __attribute__ ((__interrupt__, no_auto_psv))
+void __attribute__ ((__interrupt__, auto_psv))
 _DMA3Interrupt (void)
 {
 	// Сброс флага прерывания;
