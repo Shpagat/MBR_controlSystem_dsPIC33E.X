@@ -39,7 +39,7 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
-extern DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((eds,space(dma)));
+extern DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((eds, space(dma)));
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

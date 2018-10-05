@@ -38,7 +38,7 @@ InitAllPeriphAndModules(
 int main(
 	void)
 {
-	/* Инициализация всей периверии и программных модулей находится в
+	/* Инициализация всей периферии и программных модулей находится в
 	 * функции InitAllPeriphAndModules() */
 	InitAllPeriphAndModules();
 
@@ -50,7 +50,7 @@ int main(
 			/* Сброс флага */
 			HPT_status_s.newProgTactEn_flag = 0;
 
-			/* Опрос инерциального датчика и копирование его показаний в 
+			/* Опрос инерциального датчика и копирование его показаний в
 			 * массивы */
 			IISMPU_GetAccGyrTemperature(
 				&acc_a[0],

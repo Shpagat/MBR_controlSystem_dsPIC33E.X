@@ -13,7 +13,7 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
-DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((eds,space(dma)));
+DI_data_for_serial_plot_s UDI_serialPlotDataPackage_s __attribute__((eds, space(dma)));
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -42,29 +42,28 @@ void
 UDI_GetAndSendDebugPackForSerialPlot(
 	DI_data_for_serial_plot_s *p_s)
 {
-	DI_CopyDataForSerialPlot_f32(
-
-		/* Указатель на структуру данных отладочного пакета данных */
-		p_s,
-
-		/* Показания акселерометра */
-		acc_a[IISMPU_ROLL],
-		acc_a[IISMPU_PITCH],
-		acc_a[IISMPU_YAW],
-
-		/* Показания гироскопа */
-		gyr_a[IISMPU_ROLL],
-		gyr_a[IISMPU_PITCH],
-		gyr_a[IISMPU_YAW],
-
-		/* Терминальный символ, должен быть крайним параметром для
-		 * функции DI_CopyDataForSerialPlot_f32() */
-		(float) DI_TERMINAL_SYMBOL);
-
 	/* Запуск канала DMA для передачи отладочного пакета данных */
-	UDI_StartUart3_DMA3_Transmit(
+	UDI_StartUart3_DMA3_Transmit
+	(
 		(unsigned int*) p_s,
-		(unsigned int) sizeof(*p_s));
+		(unsigned int) DI_CopyDataForSerialPlot_f32(
+			/* Указатель на структуру данных отладочного пакета данных */
+			p_s,
+
+			/* Показания акселерометра */
+			acc_a[IISMPU_ROLL],
+			acc_a[IISMPU_PITCH],
+			acc_a[IISMPU_YAW],
+
+			/* Показания гироскопа */
+			gyr_a[IISMPU_ROLL],
+			gyr_a[IISMPU_PITCH],
+			gyr_a[IISMPU_YAW],
+
+			/* Терминальный символ, должен быть крайним параметром для
+			 * функции DI_CopyDataForSerialPlot_f32() */
+			(float) DI_TERMINAL_SYMBOL)
+	);
 }
 
 void
@@ -110,6 +109,9 @@ UDI_Init_UART3_RxTx(
 //
 //	U3MODEbits.UARTEN = 1;
 //	U3STAbits.UTXEN = 1;
+
+	DisableIntU3TX;
+	DisableIntU3RX;
 }
 
 static void
@@ -150,10 +152,10 @@ UDI_Init_DMA3_For_Uart3Tx(
 	DMA3STAH = 0x0000;
 	DMA3STBL = 0x0000;
 	DMA3STBH = 0x0000;
-	
+
 	/*  UART3TX – UART3 Transmitter */
 	DMA3REQbits.IRQSEL = 0b01010011;
-	
+
 	IFS2bits.DMA3IF = 0; // Clear DMA Interrupt Flag
 	IEC2bits.DMA3IE = 1; // Enable DMA Interrupt
 }
@@ -165,18 +167,44 @@ UDI_StartUart3_DMA3_Transmit(
 {
 	if (DMA3CONbits.CHEN == 0)
 	{
-		UDI_StartForceUart3_DMA3_Transmit(
-			pMemSrc,
-			cnt);
+		/* Выключение прерывания */
+		IEC2bits.DMA3IE = 0;
+
+		/* Непрерывный режим работы DMA */
+		DMA3CONbits.MODE = 0;
+
+		unsigned int trash = U3TXREG;
+		trash = U3TXREG;
+		trash = U3TXREG;
+		trash = U3TXREG;
+
+		/* Сброс флага Overrun модуля UART */
+		U3STAbits.OERR = 0;
+
+		/* Присваивание адреса в памяти */
+		DMA3STAL = (unsigned int)pMemSrc;
+//	DMA3STAH = (unsigned int)pMemSrc;
+
+		// Выставка количества байт, которое необходимо передать;
+		DMA3CNTbits.CNT = cnt - 1;
+
+		// Старт канала DMA;
+		DMA3CONbits.CHEN = 1;
+		DMA3REQbits.FORCE = 1;
 	}
 }
-
 
 void
 UDI_StartForceUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt)
 {
+	/* Отключение канала DMA */
+	DMA3CONbits.CHEN = 0;
+
+	/* Включение прерывания */
+	IEC2bits.DMA3IE = 1;
+
 	unsigned int trash = U3TXREG;
 	trash = U3TXREG;
 	trash = U3TXREG;

@@ -63,7 +63,7 @@ IISMPU_GetAccGyrTemperature(
 	/* Приведение к NED системе координат */
 	IISMPU_SetNEDCoordinateSystem(&IISMPU_data_s.accelArr[MPU60x0_X]);
 	IISMPU_SetNEDCoordinateSystem(&IISMPU_data_s.gyrArr[MPU60x0_X]);
-	
+
 	/* Копирование показаний акселерометра в массив */
 	memcpy(
 		(void*)pAcc,
