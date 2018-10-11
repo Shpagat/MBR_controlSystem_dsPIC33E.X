@@ -31,23 +31,50 @@
 
 
 /*#### |Begin| --> Секция - "Определение типов" ##############################*/
+typedef struct
+{
+	/* Коэффициент комплементарного фильтра */
+	float compFiltCoeff;
+
+	/* Коэффициент интегральной коррекции ошибки */
+	float integralCoeff;
+
+	/* Приращение */
+	float dT;
+} pcf_all_dta_for_pitch_init_struct_s;
+
+typedef struct
+{
+	/* Текущий угол наклона (в рад.) */
+	float angle;
+
+	/* Коэффициент комплементарного фильтра */
+	float compFiltCoeff;
+
+	/* Коэффициент интегральной коррекции ошибки */
+	float integralCoeff;
+
+	/* Приращение */
+	float dT;
+
+	/* Ошибка */
+	float err;
+} pcf_all_dta_for_pitch_s;
 /*#### |End  | <-- Секция - "Определение типов" ##############################*/
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
-extern float
-PCF_GetPitchAngle(
-    float accX,
-    float accZ,
-    float gyrY,
-    float oldAngle,
-    float compFiltCoeff,
-    float dT);
+extern void
+PCF_InitPitchData(
+	pcf_all_dta_for_pitch_s *p_s,
+	pcf_all_dta_for_pitch_init_struct_s *init_s);
 
-extern float pitchByAcc;
-extern float deltaPitch;
-extern float pitchByGyr;
-extern float err;
+extern float
+PCF_UpdatePitchAngle(
+	pcf_all_dta_for_pitch_s *p_s,
+	float gyrY,
+	float accX,
+	float accZ);
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

@@ -61,11 +61,8 @@ UDI_GetAndSendDebugPackForSerialPlot(
 			gyr_a[IISMPU_YAW],
 
 			/* Расчёт углов наклона */
-            pitchAngle,
-            pitchByAcc,
-            deltaPitch,
-            pitchByGyr,
-            err,
+			all_dta_for_pitch_s.angle,
+			all_dta_for_pitch_s.err,
 
 			/* Терминальный символ, должен быть крайним параметром для
 			 * функции DI_CopyDataForSerialPlot_f32() */

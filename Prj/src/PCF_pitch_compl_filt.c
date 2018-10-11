@@ -13,10 +13,6 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
-float pitchByAcc;
-float deltaPitch;
-float pitchByGyr;
-float err;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -29,25 +25,42 @@ float err;
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
+void
+PCF_InitPitchData(
+	pcf_all_dta_for_pitch_s *p_s,
+	pcf_all_dta_for_pitch_init_struct_s *init_s)
+{
+    p_s->angle = 0.0f;
+    p_s->err = 0.0f;
+    
+    p_s->compFiltCoeff = init_s->compFiltCoeff;
+    p_s->dT = init_s->dT;
+    p_s->integralCoeff = init_s->integralCoeff;
+}
+
 float
-PCF_GetPitchAngle(
-    float accX,
-    float accZ,
-    float gyrY,
-    float oldAngle,
-    float compFiltCoeff,
-    float dT)
+PCF_UpdatePitchAngle(
+	pcf_all_dta_for_pitch_s *p_s,
+	float gyrY,
+	float accX,
+	float accZ)
 {
 	/* Получить угол наклона по показаниям акселерометра */
-	pitchByAcc = atan2(accX, accZ);
+	float pitchByAcc = atan2(accX, accZ);
+	float angleAcc = pitchByAcc * (1.0 - p_s->compFiltCoeff);
 
-	/* Найти приращение угла наклона за промежуток времени dT */
-	deltaPitch = gyrY * dT;
-    
+	/* Найти приращение угла наклона за промежуток времени dT с учетом ошибки */
+	float deltaPitch = (gyrY - p_s->err) * p_s->dT;
+
+	/* Получить угол наклона по показаниям гироскопа */
+	float angleGyr = (p_s->angle + deltaPitch) * p_s->compFiltCoeff;
+
+	p_s->angle = angleGyr + angleAcc;
+
 	/* Интегральная коррекция ошибки */
-    err += (-oldAngle + pitchByAcc) * 0.001;
-    
-	return (((oldAngle + deltaPitch) * compFiltCoeff) + (pitchByAcc * (1.0 - compFiltCoeff)));
+	p_s->err += (p_s->angle - pitchByAcc) * p_s->integralCoeff;
+
+	return p_s->angle;
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 

@@ -17,7 +17,7 @@
 float acc_a[IISMPU_VECT_SIZE];
 float gyr_a[IISMPU_VECT_SIZE];
 float mpuTemperature;
-float pitchAngle;
+pcf_all_dta_for_pitch_s all_dta_for_pitch_s;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -62,18 +62,13 @@ int main(
 			/* Определение угла наклона балансирующего робота по тангажу */
 			VTMR_StartTimer(
 				&compFiltRuntime_s);
-    
-            /* Интегральная коррекция ошибки */
-            gyr_a[IISMPU_YAW] += err;
-            
-			pitchAngle =
-				PCF_GetPitchAngle(
-					acc_a[MPU60x0_X],
-					acc_a[MPU60x0_Z],
-					gyr_a[IISMPU_YAW],
-					pitchAngle,
-					0.97f,
-					INTEGRATE_PERIOD_IN_SEC);
+
+			PCF_UpdatePitchAngle(
+				&all_dta_for_pitch_s,
+				gyr_a[IISMPU_PITCH],
+				acc_a[IISMPU_ROLL],
+				acc_a[IISMPU_YAW]);
+
 			VTMR_GetTimerValue(
 				&compFiltRuntime_s);
 
@@ -139,6 +134,15 @@ InitAllPeriphAndModules(
 		&compFiltRuntime_s,
 		(uint16_t*) &TMR7,
 		(uint16_t*) &TMR6);
+
+	/* Инициализация констант для вычисления угла наклона*/
+    pcf_all_dta_for_pitch_init_struct_s init_s;
+	init_s.compFiltCoeff = 0.97f;
+	init_s.integralCoeff = 0.001f;
+	init_s.dT = INTEGRATE_PERIOD_IN_SEC;
+    PCF_InitPitchData(
+            &all_dta_for_pitch_s,
+            &init_s);
 
 	/* Разрешение глобальных прерываний */
 	_GIE = 1;
