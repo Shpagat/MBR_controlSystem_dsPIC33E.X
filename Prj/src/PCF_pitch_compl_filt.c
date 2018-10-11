@@ -13,6 +13,8 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
+float pitchByAcc;
+float deltaPitch;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -35,12 +37,16 @@ PCF_GetPitchAngle(
     float dT)
 {
 	/* Получить угол наклона по показаниям акселерометра */
-	float pitchByAcc = atan2(accX, accZ);
+	pitchByAcc = atan2(accX, accZ);
 
 	/* Найти приращение угла наклона за промежуток времени dT */
-	float deltaPitch = gyrY * dT;
+	deltaPitch = gyrY * dT;
+    
+	/* Интегральная коррекция ошибки */
+    float err = deltaPitch - pitchByAcc;
+    deltaPitch -= err;
 
-	return (((oldAngle + deltaPitch) * compFiltCoeff) + (pitchByAcc * (1 - compFiltCoeff)));
+	return (((oldAngle + deltaPitch) * compFiltCoeff) + (pitchByAcc * (1.0 - compFiltCoeff)));
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 

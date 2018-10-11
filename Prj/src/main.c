@@ -17,12 +17,11 @@
 float acc_a[IISMPU_VECT_SIZE];
 float gyr_a[IISMPU_VECT_SIZE];
 float mpuTemperature;
+float pitchAngle;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
 /*#### |Begin| --> Секция - "Локальные переменные" ###########################*/
-float pitchAngle;
-
 VTMR_tmr_s compFiltRuntime_s;
 /*#### |End  | <-- Секция - "Локальные переменные" ###########################*/
 

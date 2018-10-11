@@ -52,6 +52,7 @@
 extern float acc_a[3];
 extern float gyr_a[3];
 extern float mpuTemperature;
+extern float pitchAngle;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

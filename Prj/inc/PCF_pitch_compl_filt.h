@@ -43,6 +43,9 @@ PCF_GetPitchAngle(
     float oldAngle,
     float compFiltCoeff,
     float dT);
+
+extern float pitchByAcc;
+extern float deltaPitch;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 
