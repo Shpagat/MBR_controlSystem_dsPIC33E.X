@@ -45,49 +45,39 @@ int main(
 	/* Loop */
 	while (1)
 	{
-		if (HPT_status_s.newProgTactEn_flag != 0)
-		{
-			/* Сброс флага */
-			HPT_status_s.newProgTactEn_flag = 0;
+		PTWT_ProgTactStartLoop(
+			&HPT_hardProgTact_s);
 
-			PTWT_ProgTactStartLoop(
-				&HPT_hardProgTact_s);
+		/* Опрос инерциального датчика и копирование его показаний в
+		 * массивы */
+		IISMPU_GetAccGyrTemperature(
+			&acc_a[0],
+			&gyr_a[0],
+			&mpuTemperature);
 
-			/* Опрос инерциального датчика и копирование его показаний в
-			 * массивы */
-			IISMPU_GetAccGyrTemperature(
-				&acc_a[0],
-				&gyr_a[0],
-				&mpuTemperature);
+		/* Определение угла наклона балансирующего робота по тангажу */
+		VTMR_StartTimer(
+			&compFiltRuntime_s);
+		pitchAngle =
+			PCF_GetPitchAngle(
+				IISMPU_data_s.accelArr[MPU60x0_X],
+				IISMPU_data_s.accelArr[MPU60x0_Z],
+				IISMPU_data_s.gyrArr[MPU60x0_Y],
+				pitchAngle,
+				0.95f,
+				INTEGRATE_PERIOD_IN_SEC);
+		VTMR_GetTimerValue(
+			&compFiltRuntime_s);
 
-			/* Определение угла наклона балансирующего робота по тангажу */
-			VTMR_StartTimer(
-				&compFiltRuntime_s);
-			pitchAngle =
-				PCF_GetPitchAngle(
-					IISMPU_data_s.accelArr[MPU60x0_X],
-					IISMPU_data_s.accelArr[MPU60x0_Z],
-					IISMPU_data_s.gyrArr[MPU60x0_Y],
-					pitchAngle,
-					0.95f,
-					INTEGRATE_PERIOD_IN_SEC);
-			VTMR_GetTimerValue(
-				&compFiltRuntime_s);
+		/* ################ Отладочная информация ####################### */
+		/* Формирование отладочного пакета данных */
+		UDI_GetAndSendDebugPackForSerialPlot(
+			&UDI_serialPlotDataPackage_s);
+		/* ############################################################## */
 
-			/* ################ Отладочная информация ####################### */
-			/* Формирование отладочного пакета данных */
-			UDI_GetAndSendDebugPackForSerialPlot(
-				&UDI_serialPlotDataPackage_s);
-			/* ############################################################## */
-
-			/* Нахождение оставшегося времени программного такта */
-			HPT_status_s.restProgTactTime =
-				__HARD_PROG_TACT_IN_US__ - TMR9;
-
-			PTWT_ProgTactEndLoop(
-				&HPT_hardProgTact_s);
-			/* Здесь не должно быть НИЧЕГО!!! */
-		}
+		PTWT_ProgTactEndLoop(
+			&HPT_hardProgTact_s);
+		/* Здесь не должно быть НИЧЕГО!!! */
 	}
 	return (1);
 }
