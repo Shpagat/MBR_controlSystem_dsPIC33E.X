@@ -34,3 +34,6 @@
 [submodule "Lib_H_PIC_uart"]
 	path = Lib_H_PIC_uart
 	url = https://github.com/Raptor26/Lib_H_PIC_uart.git
+[submodule "Lib_A_PTWT_prog_tact_with_timer"]
+	path = Lib_A_PTWT_prog_tact_with_timer
+	url = https://github.com/Raptor26/Lib_A_PTWT_prog_tact_with_timer.git
