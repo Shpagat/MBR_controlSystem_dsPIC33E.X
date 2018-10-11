@@ -62,13 +62,17 @@ int main(
 			/* Определение угла наклона балансирующего робота по тангажу */
 			VTMR_StartTimer(
 				&compFiltRuntime_s);
+    
+            /* Интегральная коррекция ошибки */
+            gyr_a[IISMPU_YAW] += err;
+            
 			pitchAngle =
 				PCF_GetPitchAngle(
-					IISMPU_data_s.accelArr[MPU60x0_X],
-					IISMPU_data_s.accelArr[MPU60x0_Z],
-					IISMPU_data_s.gyrArr[MPU60x0_Y],
+					acc_a[MPU60x0_X],
+					acc_a[MPU60x0_Z],
+					gyr_a[IISMPU_YAW],
 					pitchAngle,
-					0.95f,
+					0.97f,
 					INTEGRATE_PERIOD_IN_SEC);
 			VTMR_GetTimerValue(
 				&compFiltRuntime_s);

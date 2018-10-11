@@ -16,6 +16,7 @@
 float pitchByAcc;
 float deltaPitch;
 float pitchByGyr;
+float err;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -43,14 +44,9 @@ PCF_GetPitchAngle(
 	/* Найти приращение угла наклона за промежуток времени dT */
 	deltaPitch = gyrY * dT;
     
-    pitchByGyr += deltaPitch;
-    
 	/* Интегральная коррекция ошибки */
-//    float err = deltaPitch - pitchByAcc;
-    //deltaPitch -= err;
+    err += (-oldAngle + pitchByAcc) * 0.001;
     
-//    return (pitchByGyr * compFiltCoeff) + (pitchByAcc * (1.0 - compFiltCoeff));
-
 	return (((oldAngle + deltaPitch) * compFiltCoeff) + (pitchByAcc * (1.0 - compFiltCoeff)));
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/

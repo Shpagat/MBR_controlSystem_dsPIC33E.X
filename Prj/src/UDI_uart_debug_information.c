@@ -65,6 +65,7 @@ UDI_GetAndSendDebugPackForSerialPlot(
             pitchByAcc,
             deltaPitch,
             pitchByGyr,
+            err,
 
 			/* Терминальный символ, должен быть крайним параметром для
 			 * функции DI_CopyDataForSerialPlot_f32() */
