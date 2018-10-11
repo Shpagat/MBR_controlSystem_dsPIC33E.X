@@ -44,48 +44,38 @@ int main(
 	/* Loop */
 	while (1)
 	{
-		if (HPT_status_s.newProgTactEn_flag != 0)
-		{
-			/* Сброс флага */
-			HPT_status_s.newProgTactEn_flag = 0;
+		PTWT_ProgTactStartLoop(
+			&HPT_hardProgTact_s);
 
-			PTWT_ProgTactStartLoop(
-				&HPT_hardProgTact_s);
+		/* Опрос инерциального датчика и копирование его показаний в
+		 * массивы */
+		IISMPU_GetAccGyrTemperature(
+			&acc_a[0],
+			&gyr_a[0],
+			&mpuTemperature);
 
-			/* Опрос инерциального датчика и копирование его показаний в
-			 * массивы */
-			IISMPU_GetAccGyrTemperature(
-				&acc_a[0],
-				&gyr_a[0],
-				&mpuTemperature);
+		/* Определение угла наклона балансирующего робота по тангажу */
+		VTMR_StartTimer(
+			&compFiltRuntime_s);
 
-			/* Определение угла наклона балансирующего робота по тангажу */
-			VTMR_StartTimer(
-				&compFiltRuntime_s);
+		PCF_UpdatePitchAngle(
+			&all_dta_for_pitch_s,
+			gyr_a[IISMPU_PITCH],
+			acc_a[IISMPU_ROLL],
+			acc_a[IISMPU_YAW]);
 
-			PCF_UpdatePitchAngle(
-				&all_dta_for_pitch_s,
-				gyr_a[IISMPU_PITCH],
-				acc_a[IISMPU_ROLL],
-				acc_a[IISMPU_YAW]);
+		VTMR_GetTimerValue(
+			&compFiltRuntime_s);
 
-			VTMR_GetTimerValue(
-				&compFiltRuntime_s);
+		/* ################ Отладочная информация ####################### */
+		/* Формирование отладочного пакета данных */
+		UDI_GetAndSendDebugPackForSerialPlot(
+			&UDI_serialPlotDataPackage_s);
+		/* ############################################################## */
 
-			/* ################ Отладочная информация ####################### */
-			/* Формирование отладочного пакета данных */
-			UDI_GetAndSendDebugPackForSerialPlot(
-				&UDI_serialPlotDataPackage_s);
-			/* ############################################################## */
-
-			/* Нахождение оставшегося времени программного такта */
-			HPT_status_s.restProgTactTime =
-				__HARD_PROG_TACT_IN_US__ - TMR9;
-
-			PTWT_ProgTactEndLoop(
-				&HPT_hardProgTact_s);
-			/* Здесь не должно быть НИЧЕГО!!! */
-		}
+		PTWT_ProgTactEndLoop(
+			&HPT_hardProgTact_s);
+		/* Здесь не должно быть НИЧЕГО!!! */
 	}
 	return (1);
 }
@@ -136,13 +126,13 @@ InitAllPeriphAndModules(
 		(uint16_t*) &TMR6);
 
 	/* Инициализация констант для вычисления угла наклона*/
-    pcf_all_dta_for_pitch_init_struct_s init_s;
+	pcf_all_dta_for_pitch_init_struct_s init_s;
 	init_s.compFiltCoeff = 0.97f;
 	init_s.integralCoeff = 0.001f;
 	init_s.dT = INTEGRATE_PERIOD_IN_SEC;
-    PCF_InitPitchData(
-            &all_dta_for_pitch_s,
-            &init_s);
+	PCF_InitPitchData(
+		&all_dta_for_pitch_s,
+		&init_s);
 
 	/* Разрешение глобальных прерываний */
 	_GIE = 1;
