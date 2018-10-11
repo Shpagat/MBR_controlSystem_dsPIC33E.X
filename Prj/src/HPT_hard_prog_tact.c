@@ -70,7 +70,6 @@ void  __attribute__ ((__interrupt__, auto_psv))
 _T9Interrupt (void)
 {
 	IFS3bits.T9IF = 0;  // Clear Timer9 Interrupt Flag```````````````````````````````````
-	HPT_status_s.newProgTactEn_flag++;
 
 	PTWT_ProgTactISR(
 		&HPT_hardProgTact_s);
