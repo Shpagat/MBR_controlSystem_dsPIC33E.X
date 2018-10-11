@@ -41,6 +41,12 @@
       <itemPath>Lib_A_NINTEG_numerical_integration/Lib_A_NINTEG_numerical_integration.c</itemPath>
       <itemPath>Lib_A_NINTEG_numerical_integration/Lib_A_NINTEG_numerical_integration.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="f10"
+                   displayName="Lib_A_PTWT_prog_tact_with_timer"
+                   projectFiles="true">
+      <itemPath>Lib_A_PTWT_prog_tact_with_timer/Lib_A_PTWT_prog_tact_with_timer.c</itemPath>
+      <itemPath>Lib_A_PTWT_prog_tact_with_timer/Lib_A_PTWT_prog_tact_with_timer.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="f7"
                    displayName="Lib_A_REGUL_regulators"
                    projectFiles="true">

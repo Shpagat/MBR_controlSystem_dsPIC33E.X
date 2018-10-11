@@ -50,6 +50,9 @@ int main(
 			/* Сброс флага */
 			HPT_status_s.newProgTactEn_flag = 0;
 
+			PTWT_ProgTactStartLoop(
+				&HPT_hardProgTact_s);
+
 			/* Опрос инерциального датчика и копирование его показаний в
 			 * массивы */
 			IISMPU_GetAccGyrTemperature(
@@ -80,6 +83,9 @@ int main(
 			/* Нахождение оставшегося времени программного такта */
 			HPT_status_s.restProgTactTime =
 				__HARD_PROG_TACT_IN_US__ - TMR9;
+
+			PTWT_ProgTactEndLoop(
+				&HPT_hardProgTact_s);
 			/* Здесь не должно быть НИЧЕГО!!! */
 		}
 	}
@@ -115,7 +121,7 @@ InitAllPeriphAndModules(
 		(unsigned int long) 115200UL);
 
 	/* Инициализация аппаратного таймера для тактирования цикла while(1) */
-	HPT_Init_TMRForProg_Tact(
+	HPT_Init_TMR9ForProgTact_PTWTLibrary(
 		__HARD_PROG_TACT_IN_US__);
 
 	/* Инициализация аппаратных таймеров для подключения в ним виртуальных

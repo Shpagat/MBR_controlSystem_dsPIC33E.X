@@ -22,6 +22,7 @@
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
+#include "../../Lib_A_PTWT_prog_tact_with_timer/Lib_A_PTWT_prog_tact_with_timer.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -42,12 +43,13 @@ typedef struct
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
 extern hpt_status_s HPT_status_s;
+extern ptwt_prog_tact_s HPT_hardProgTact_s;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 
 /*#### |Begin| --> Секция - "Прототипы глобальных функций" ###################*/
 extern void
-HPT_Init_TMRForProg_Tact(
+HPT_Init_TMR9ForProgTact_PTWTLibrary(
 	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 

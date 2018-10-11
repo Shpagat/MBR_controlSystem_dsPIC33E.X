@@ -14,6 +14,7 @@
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
 hpt_status_s HPT_status_s;
+ptwt_prog_tact_s HPT_hardProgTact_s;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -22,10 +23,29 @@ hpt_status_s HPT_status_s;
 
 
 /*#### |Begin| --> Секция - "Прототипы локальных функций" ####################*/
+static void
+HPT_Init_TMRForProg_Tact(
+	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы локальных функций" ####################*/
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
+void
+HPT_Init_TMR9ForProgTact_PTWTLibrary(
+	unsigned int cnt)
+{
+	/* Инициализация структуры для тактирования программы */
+	ptwt_prog_tact_init_struct_s progTactInit_s;
+	progTactInit_s.pHardCnt			= (uint16_t*) &TMR9;
+	progTactInit_s.progTactTime		= cnt;
+	PTWT_Init_ProgTactStruct(
+		&HPT_hardProgTact_s,
+		&progTactInit_s);
+
+	/* Инициализация аппаратного таймера */
+	HPT_Init_TMRForProg_Tact(cnt);
+}
+
 void
 HPT_Init_TMRForProg_Tact(
 	unsigned int cnt)
@@ -51,6 +71,9 @@ _T9Interrupt (void)
 {
 	IFS3bits.T9IF = 0;  // Clear Timer9 Interrupt Flag```````````````````````````````````
 	HPT_status_s.newProgTactEn_flag++;
+
+	PTWT_ProgTactISR(
+		&HPT_hardProgTact_s);
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
