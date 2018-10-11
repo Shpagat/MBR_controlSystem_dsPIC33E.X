@@ -25,19 +25,45 @@
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
+
+/**
+ * @brief	Функция выполняет инициализацию структуры для расчета текущего угла
+ * 			наклона с помощью комплиментарного фильтра
+ * @param[in,out]	*p_s:   Указатель на структуру, в которой
+ * 							содержится необходимая информация для
+ * 							работы функции
+ * @param[in]	*pInit_s:	Указатель на структуру, в которой содержится
+ * 							необходимая информация для инициализации
+ * 							структуры p_s
+ * @return None
+ */
 void
 PCF_InitPitchData(
 	pcf_all_dta_for_pitch_s *p_s,
-	pcf_all_dta_for_pitch_init_struct_s *init_s)
+	pcf_all_dta_for_pitch_init_struct_s *pInit_s)
 {
     p_s->angle = 0.0f;
     p_s->err = 0.0f;
     
-    p_s->compFiltCoeff = init_s->compFiltCoeff;
-    p_s->dT = init_s->dT;
-    p_s->integralCoeff = init_s->integralCoeff;
+    p_s->compFiltCoeff = pInit_s->compFiltCoeff;
+    p_s->dT = pInit_s->dT;
+    p_s->integralCoeff = pInit_s->integralCoeff;
 }
 
+/**
+ * @brief	Функция вычисляет текущий угол наклона по тангажу с помощью 
+ *          комплиментарного фильтр, а также обновляет данные в структуре 
+ *          с необходимой информацией 
+ * @param[in,out]	*p_s:	Указатель на структуру, в которой
+ * 							содержится необходимая информация для
+ * 							работы функции
+ * @param[in]	gyrY:	Текущее значение гироскопа по оси тангажа
+ * @param[in]	accX:	Текущее значение акселерометра по оси направления
+ *                      движения
+ * @param[in]	accZ:	Текущее значение акселерометра по оси, направленной
+ *                      по направлению вектора силы тяжести
+ * @return Текущий угол наклона
+ */
 float
 PCF_UpdatePitchAngle(
 	pcf_all_dta_for_pitch_s *p_s,
