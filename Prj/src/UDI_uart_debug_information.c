@@ -42,11 +42,8 @@ void
 UDI_GetAndSendDebugPackForSerialPlot(
 	DI_data_for_serial_plot_s *p_s)
 {
-	/* Запуск канала DMA для передачи отладочного пакета данных */
-	UDI_StartUart3_DMA3_Transmit
-	(
-		(unsigned int*) p_s,
-		(unsigned int) DI_CopyDataForSerialPlot_f32(
+	unsigned int cnt =
+		DI_CopyDataForSerialPlot_f32(
 			/* Указатель на структуру данных отладочного пакета данных */
 			p_s,
 
@@ -66,8 +63,12 @@ UDI_GetAndSendDebugPackForSerialPlot(
 
 			/* Терминальный символ, должен быть крайним параметром для
 			 * функции DI_CopyDataForSerialPlot_f32() */
-			(float) DI_TERMINAL_SYMBOL)
-	);
+			(float) DI_TERMINAL_SYMBOL);
+
+	/* Запуск канала DMA для передачи отладочного пакета данных */
+	UDI_StartUart3_DMA3_Transmit(
+		(unsigned int*) p_s,
+		(unsigned int) cnt);
 }
 
 void
@@ -147,7 +148,7 @@ UDI_Init_DMA3_For_Uart3Tx(
 	DMA3CONbits.AMODE = 0; //	Configure DMA for Register Indirect mode
 //								with post-increment
 	DMA3CONbits.SIZE = 1;
-	DMA3CONbits.MODE = 0; // Configure DMA for Continuous mode
+	DMA3CONbits.MODE = 1;
 	DMA3CONbits.DIR = 1; // RAM-to-Peripheral data transfers
 	DMA3CNT = 0;
 	DMA3REQ = 0x0053; // Select UART3 Transmitter
@@ -171,12 +172,6 @@ UDI_StartUart3_DMA3_Transmit(
 {
 	if (DMA3CONbits.CHEN == 0)
 	{
-		/* Выключение прерывания */
-		IEC2bits.DMA3IE = 0;
-
-		/* Непрерывный режим работы DMA */
-		DMA3CONbits.MODE = 0;
-
 		unsigned int trash = U3TXREG;
 		trash = U3TXREG;
 		trash = U3TXREG;
@@ -205,9 +200,6 @@ UDI_StartForceUart3_DMA3_Transmit(
 {
 	/* Отключение канала DMA */
 	DMA3CONbits.CHEN = 0;
-
-	/* Включение прерывания */
-	IEC2bits.DMA3IE = 1;
 
 	unsigned int trash = U3TXREG;
 	trash = U3TXREG;

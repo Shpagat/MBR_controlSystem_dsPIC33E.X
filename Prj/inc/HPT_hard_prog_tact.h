@@ -42,7 +42,6 @@ typedef struct
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
-extern hpt_status_s HPT_status_s;
 extern ptwt_prog_tact_s HPT_hardProgTact_s;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 

@@ -13,7 +13,6 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
-hpt_status_s HPT_status_s;
 ptwt_prog_tact_s HPT_hardProgTact_s;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
@@ -73,6 +72,7 @@ _T9Interrupt (void)
 
 	PTWT_ProgTactISR(
 		&HPT_hardProgTact_s);
+//	HPT_hardProgTact_s.enable_flag++;
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
