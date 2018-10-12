@@ -19,7 +19,7 @@ float gyr_a[IISMPU_VECT_SIZE];
 float mpuTemperature;
 pcf_all_dta_for_pitch_s all_dta_for_pitch_s;
 
-char testMessage_a[] = "Hello World \n";
+char testMessage_a[] = "Hello World.\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -69,15 +69,23 @@ int main(
 		VTMR_GetTimerValue(
 			&compFiltRuntime_s);
 
-		LRMC_StartForce_UART2DMATransmit(
-			(unsigned int*)&testMessage_a[0], 
-			strlen(testMessage_a));
+//		if (DMA2CONbits.CHEN == 0)
+//		{
+			LRMC_SendCmdForLeftRightMotors(
+				&LRMC_leftRightMotorControlPack_s,
+				(__VMCPC_FPT__) 0.2f,
+				(__VMCPC_FPT__) 0.2f);
+
+//			LRMC_StartForce_UART2DMATransmit(
+//				(unsigned int*) testMessage_a,
+//				(unsigned int) strlen(testMessage_a));
+//		}
 //		U2TXREG = 0xAA;
-		
+
 		/* ################ Отладочная информация ####################### */
 		/* Формирование отладочного пакета данных */
-		UDI_GetAndSendDebugPackForSerialPlot(
-			&UDI_serialPlotDataPackage_s);
+//		UDI_GetAndSendDebugPackForSerialPlot(
+//			&UDI_serialPlotDataPackage_s);
 		/* ############################################################## */
 
 		PTWT_ProgTactEndLoop(
@@ -129,7 +137,7 @@ InitAllPeriphAndModules(
 	/* Инициализация UART2 для передачи команд контроллерам электродвигателей */
 	LRMC_Init_UART_DMA_IOPins(
 		(unsigned int long) FCY,
-		(unsigned int long) 660000UL);
+		(unsigned int long) 9600UL);
 	/*=== |End  | <-- Секция - "Конфигурирование периферии микроконтроллера" =*/
 
 	VTMR_InitTimerStruct(

@@ -37,6 +37,7 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
+extern vmcpc_f3m_package_s LRMC_leftRightMotorControlPack_s;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 
@@ -45,6 +46,12 @@ extern void
 LRMC_Init_UART_DMA_IOPins(
 	unsigned long fcy,
 	unsigned long baudrate);
+
+extern void
+LRMC_SendCmdForLeftRightMotors(
+	vmcpc_f3m_package_s *p_s,
+	__VMCPC_FPT__ leftMotor,
+	__VMCPC_FPT__ rightMotor);
 
 extern void
 LRMC_StartForce_UART2DMATransmit(

@@ -13,6 +13,7 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
+vmcpc_f3m_package_s LRMC_leftRightMotorControlPack_s __attribute__((space(xmemory)));
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -55,6 +56,29 @@ LRMC_Init_UART_DMA_IOPins(
 }
 
 void
+LRMC_SendCmdForLeftRightMotors(
+	vmcpc_f3m_package_s *p_s,
+	__VMCPC_FPT__ leftMotor,
+	__VMCPC_FPT__ rightMotor)
+{
+	/* Формирование пакета данных */
+	VMCPC_F3M_SetControlPackage(
+		p_s,
+		rightMotor,
+		leftMotor,
+		(__VMCPC_FPT__) 0.0f);
+
+//	/* Старт передачи пакета данных */
+	LRMC_StartForce_UART2DMATransmit(
+		(unsigned int*) p_s,
+		(unsigned int) sizeof(vmcpc_f3m_package_s));
+	
+//	PIC_USART_2_TransmitPackageWithOutInterrupt(
+//		(unsigned int*) p_s,
+//		(unsigned int)sizeof(vmcpc_f3m_package_s));
+}
+
+void
 LRMC_Init_IOPorts(
 	void)
 {
@@ -65,6 +89,7 @@ LRMC_Init_IOPorts(
 	TRISCbits.TRISC13 = 1;
 	RPINR19bits.U2RXR = 0b0111101;
 
+	ANSELD = 0x0000;
 	//  "UART 2 <TX>" - "INT0/DMH/RP64/RD0"
 	//  |Function|      |RPnR 5:0 |     |Output Name                 |
 	//  |U2TX    |      |000011   |     |RPn tied to UART2 Transmit  |
@@ -77,78 +102,105 @@ LRMC_Init_UART2_TransmitReceive(
 	unsigned long fcy,
 	unsigned long baudrate)
 {
-	unsigned int config1 =
-		UART_EN
-		& UART_IDLE_CON
-		& UART_IrDA_DISABLE
-		& UART_MODE_SIMPLEX
-		& UART_UEN_00
-		& UART_DIS_WAKE
-		& UART_DIS_LOOPBACK
-		& UART_DIS_ABAUD
-		& UART_UXRX_IDLE_ONE
-		& UART_BRGH_SIXTEEN
-		& UART_NO_PAR_8BIT
-		& UART_1STOPBIT,
-
-		config2 =
-			UART_INT_TX
-			& UART_IrDA_POL_INV_ZERO
-			& UART_SYNC_BREAK_DISABLED
-			& UART_TX_ENABLE
-			& UART_TX_BUF_NOT_FUL
-			& UART_INT_RX_CHAR
-			& UART_ADR_DETECT_DIS
-			& UART_RX_OVERRUN_CLEAR,
-
-			U_BRG =
-				((fcy / baudrate) / 16) - 1;
-
-	OpenUART2(
-		config1,
-		config2,
-		U_BRG);
-
+//	unsigned int config1 =
+//		UART_EN
+//		& UART_IDLE_CON
+//		& UART_IrDA_DISABLE
+//		& UART_MODE_SIMPLEX
+//		& UART_UEN_00
+//		& UART_DIS_WAKE
+//		& UART_DIS_LOOPBACK
+//		& UART_DIS_ABAUD
+//		& UART_UXRX_IDLE_ONE
+//		& UART_BRGH_SIXTEEN
+//		& UART_NO_PAR_8BIT
+//		& UART_1STOPBIT,
+//
+//		config2 =
+//			UART_INT_TX
+//			& UART_IrDA_POL_INV_ZERO
+//			& UART_SYNC_BREAK_DISABLED
+//			& UART_TX_ENABLE
+//			& UART_TX_BUF_NOT_FUL
+//			& UART_INT_RX_CHAR
+//			& UART_ADR_DETECT_DIS
+//			& UART_RX_OVERRUN_CLEAR,
+//
+//			U_BRG =
+//				((fcy / baudrate) / 16) - 1;
+//
+//	OpenUART2(
+//		config1,
+//		config2,
+//		U_BRG);
+//
 //	ConfigIntUART2(
 //		UART_RX_INT_EN
 //		& UART_RX_INT_PR7
 //		& UART_TX_INT_EN
 //		& UART_TX_INT_PR7);
+
+	PIC_Init_USART_2_1StopBit_8BitData_RxIntEnChar_TxIntEnChar(fcy, baudrate);
 }
 
 void
 LRMC_Init_DMA2_ForUart2Tramsmit(
 	void)
 {
-	unsigned int config =
-		DMA2_MODULE_OFF
-		& DMA2_SIZE_BYTE
-		& DMA2_TO_PERIPHERAL
-		& DMA2_INTERRUPT_BLOCK
-		& DMA2_NORMAL
-		& DMA2_REGISTER_POST_INCREMENT
-		& DMA2_ONE_SHOT,
-		irq_ = DMA2_AUTOMATIC,
-		sta_address = 0x0000,
-		stb_address = 0x0000,
-		pad_address = (unsigned int) &U2TXREG,
-		count = 0u;
-
-	CloseDMA2();
-	OpenDMA2(
-		config,
-		irq_,
-		sta_address,
-		stb_address,
-		pad_address,
-		count);
-
-	ConfigIntDMA2(
-		DMA2_INT_PRI_5
-		& DMA2_INT_ENABLE);
-
-	/* UART2TX – UART2 Transmitter */
+//	unsigned int config =
+//		DMA2_MODULE_OFF
+//		& DMA2_SIZE_BYTE
+//		& DMA2_TO_PERIPHERAL
+//		& DMA2_INTERRUPT_BLOCK
+//		& DMA2_NORMAL
+//		& DMA2_REGISTER_POST_INCREMENT
+//		& DMA2_ONE_SHOT;
+//	unsigned int irq_ = DMA2_AUTOMATIC;
+//	unsigned int sta_address = (unsigned int)&LRMC_leftRightMotorControlPack_s;
+//	unsigned int stb_address = (unsigned int)&LRMC_leftRightMotorControlPack_s;
+//	unsigned int pad_address = (volatile unsigned int) &U2TXREG;
+//	unsigned int count = 15u;
+//
+//	CloseDMA2();
+//	OpenDMA2(
+//		config,
+//		irq_,
+//		sta_address,
+//		stb_address,
+//		pad_address,
+//		count);
+//
+//	ConfigIntDMA2(
+//		DMA2_INT_PRI_5
+//		& DMA2_INT_ENABLE);
+//
+//	IFS1bits.DMA2IF = 0;
+//
+//	/* UART2TX – UART2 Transmitter */
 //	DMA0REQbits.IRQSEL = 0b00011111;
+//
+//	DMA2CONbits.CHEN = 0;
+//
+//	EnableIntDMA2;
+	
+	DMA2CONbits.AMODE = 0; //	Configure DMA for Register Indirect mode
+//								with post-increment
+	DMA2CONbits.SIZE = 1;
+	DMA2CONbits.MODE = 1;
+	DMA2CONbits.DIR = 1; // RAM-to-Peripheral data transfers
+	DMA2CNT = 0;
+	DMA2REQ = 0b00011111; // Select UART3 Transmitter
+	DMA2PAD = (volatile unsigned int) &U2TXREG;
+	DMA2STAL = 0x0000;
+	DMA2STAH = 0x0000;
+	DMA2STBL = 0x0000;
+	DMA2STBH = 0x0000;
+	
+	/*  UART3TX – UART3 Transmitter */
+	DMA2REQbits.IRQSEL = 0b01010011;
+
+	IFS1bits.DMA2IF = 0; // Clear DMA Interrupt Flag
+	IEC1bits.DMA2IE = 1; // Enable DMA Interrupt
 }
 
 void
@@ -156,23 +208,29 @@ LRMC_StartForce_UART2DMATransmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt)
 {
-	unsigned int trash = U2TXREG;
-	trash = U2TXREG;
-	trash = U2TXREG;
-	trash = U2TXREG;
+	U2STAbits.UTXEN = 0;
+	/* Отключение канала DMA */
+//	DMA2CONbits.CHEN = 0;
+
+//	unsigned int trash = U2TXREG;
+//	trash = U2TXREG;
+//	trash = U2TXREG;
+//	trash = U2TXREG;
 
 	/* Сброс флага Overrun модуля UART */
-	U2STAbits.OERR = 0;
+//	U2STAbits.OERR = 0;
 
 	/* Присваивание адреса в памяти */
 	DMA2STAL = (unsigned int)pMemSrc;
-		
+	DMA2STAH = (unsigned int)pMemSrc;
+
 	/* Установка количества байт, которое необходимо передать */
 	DMA2CNTbits.CNT = cnt - 1;
 
 	/* Старт канала DMA */
 	DMA2CONbits.CHEN = 1;
 	DMA2REQbits.FORCE = 1;
+	U2STAbits.UTXEN = 1;
 }
 
 void __attribute__ ((__interrupt__, auto_psv))
@@ -182,7 +240,6 @@ _U2TXInterrupt (void)
 	IFS1bits.U2TXIF = 0;
 }
 
-
 void __attribute__ ((__interrupt__, auto_psv))
 _U2RXInterrupt (void)
 {
@@ -190,14 +247,15 @@ _U2RXInterrupt (void)
 	IFS1bits.U2RXIF = 0;
 }
 
-void __attribute__ ((__interrupt__, no_auto_psv))
+void __attribute__ ((__interrupt__, auto_psv))
 _DMA2Interrupt (void)
 {
 	/* Сброс флага прерывания */
 	IFS1bits.DMA2IF = 0;
-	
+
 	/* Отключение канала DMA */
 	DMA2CONbits.CHEN = 0;
+//	U2STAbits.UTXEN = 0;
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
