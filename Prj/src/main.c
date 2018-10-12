@@ -67,6 +67,9 @@ int main(
 		VTMR_GetTimerValue(
 			&compFiltRuntime_s);
 
+		
+		U2TXREG = 0xAA;
+		
 		/* ################ Отладочная информация ####################### */
 		/* Формирование отладочного пакета данных */
 		UDI_GetAndSendDebugPackForSerialPlot(
@@ -118,6 +121,11 @@ InitAllPeriphAndModules(
 
 	/* Инициализация всей периферии для работы с внутренним инерциальным датчиком */
 	IISMPU_Init_AllPeriphForInternalMPU6000();
+
+	/* Инициализация UART2 для передачи команд контроллерам электродвигателей */
+	LRMC_Init_UART_DMA_IOPins(
+		(unsigned int long) FCY,
+		(unsigned int long) 9600UL);
 	/*=== |End  | <-- Секция - "Конфигурирование периферии микроконтроллера" =*/
 
 	VTMR_InitTimerStruct(
