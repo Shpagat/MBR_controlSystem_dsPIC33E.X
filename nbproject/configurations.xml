@@ -60,6 +60,14 @@
       <itemPath>Lib_A_RGBF_ring_buffer/Lib_A_RGBF_ring_buffer.c</itemPath>
       <itemPath>Lib_A_RGBF_ring_buffer/Lib_A_RGBF_ring_buffer.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="Lib_A_VMCPC_vmc_protocol_communicate"
+                   displayName="Lib_A_VMCPC_vmc_protocol_communicate"
+                   projectFiles="true">
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_vmc_protocol_communicate.c</itemPath>
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_vmc_protocol_communicate.h</itemPath>
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_F3M_vmc_protocol_communicate.c</itemPath>
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_F3M_vmc_protocol_communicate.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="f9"
                    displayName="Lib_A_VTMR_virtual_timers"
                    projectFiles="true">
@@ -205,7 +213,7 @@
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros"
-                  value="__FRC__;__PCB_758725_124_03__;__DI_MAX_PLOTS_IN_PACKAGE__=30;__REGUL_FLOAT_POINT_TYPE__=float;__HARD_PROG_TACT_IN_US__=10000u;__USE_FRC_FOR_FCY__"/>
+                  value="__FRC__;__PCB_758725_124_03__;__DI_MAX_PLOTS_IN_PACKAGE__=30;__REGUL_FLOAT_POINT_TYPE__=float;__HARD_PROG_TACT_IN_US__=10000u;__USE_FRC_FOR_FCY__;__VMCPC_FPT__=float"/>
         <property key="scalar-model" value="default"/>
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
@@ -360,7 +368,6 @@
         <property key="UART 4" value="true"/>
         <property key="USB" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

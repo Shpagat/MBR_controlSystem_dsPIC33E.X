@@ -23,6 +23,7 @@
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
+#include "../../Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_vmc_protocol_communicate.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
