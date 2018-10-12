@@ -23,5 +23,7 @@
 
 #### `UART2` - transmit and receive
 
- - `UART2_Tx` - 
- - `UART2_Rx` - 
+ - `UART2_Tx with DMA2`
+ - `UART2_Rx` - not used
+
+#### `DMA2` for `UART2_Tx`

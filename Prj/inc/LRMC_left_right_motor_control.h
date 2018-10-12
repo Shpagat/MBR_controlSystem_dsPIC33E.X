@@ -44,6 +44,11 @@ extern void
 LRMC_Init_UART_DMA_IOPins(
 	unsigned long fcy,
 	unsigned long baudrate);
+
+extern void
+LRMC_StartForce_UART2DMATransmit(
+	unsigned int *pMemSrc,
+	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 

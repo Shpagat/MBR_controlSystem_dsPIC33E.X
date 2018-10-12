@@ -31,7 +31,7 @@ LRMC_Init_UART2_TransmitReceive(
 	unsigned long baudrate);
 
 static void
-LRMC_Init_DMA2_ForTramsmit(
+LRMC_Init_DMA2_ForUart2Tramsmit(
 	void);
 /*#### |End  | <-- Секция - "Прототипы локальных функций" ####################*/
 
@@ -51,7 +51,7 @@ LRMC_Init_UART_DMA_IOPins(
 		baudrate);
 
 	/* Инициализация модуля DMA */
-	LRMC_Init_DMA2_ForTramsmit();
+	LRMC_Init_DMA2_ForUart2Tramsmit();
 }
 
 void
@@ -109,18 +109,70 @@ LRMC_Init_UART2_TransmitReceive(
 		config2,
 		U_BRG);
 
-	ConfigIntUART2(
-		UART_RX_INT_EN
-		& UART_RX_INT_PR7
-		& UART_TX_INT_EN
-		& UART_TX_INT_PR7);
+//	ConfigIntUART2(
+//		UART_RX_INT_EN
+//		& UART_RX_INT_PR7
+//		& UART_TX_INT_EN
+//		& UART_TX_INT_PR7);
 }
 
 void
-LRMC_Init_DMA2_ForTramsmit(
+LRMC_Init_DMA2_ForUart2Tramsmit(
 	void)
 {
+	unsigned int config =
+		DMA2_MODULE_OFF
+		& DMA2_SIZE_BYTE
+		& DMA2_TO_PERIPHERAL
+		& DMA2_INTERRUPT_BLOCK
+		& DMA2_NORMAL
+		& DMA2_REGISTER_POST_INCREMENT
+		& DMA2_ONE_SHOT,
+		irq_ = DMA2_AUTOMATIC,
+		sta_address = 0x0000,
+		stb_address = 0x0000,
+		pad_address = (unsigned int) &U2TXREG,
+		count = 0u;
 
+	CloseDMA2();
+	OpenDMA2(
+		config,
+		irq_,
+		sta_address,
+		stb_address,
+		pad_address,
+		count);
+
+	ConfigIntDMA2(
+		DMA2_INT_PRI_5
+		& DMA2_INT_ENABLE);
+
+	/* UART2TX – UART2 Transmitter */
+//	DMA0REQbits.IRQSEL = 0b00011111;
+}
+
+void
+LRMC_StartForce_UART2DMATransmit(
+	unsigned int *pMemSrc,
+	unsigned int cnt)
+{
+	unsigned int trash = U2TXREG;
+	trash = U2TXREG;
+	trash = U2TXREG;
+	trash = U2TXREG;
+
+	/* Сброс флага Overrun модуля UART */
+	U2STAbits.OERR = 0;
+
+	/* Присваивание адреса в памяти */
+	DMA2STAL = (unsigned int)pMemSrc;
+		
+	/* Установка количества байт, которое необходимо передать */
+	DMA2CNTbits.CNT = cnt - 1;
+
+	/* Старт канала DMA */
+	DMA2CONbits.CHEN = 1;
+	DMA2REQbits.FORCE = 1;
 }
 
 void __attribute__ ((__interrupt__, auto_psv))
@@ -136,6 +188,16 @@ _U2RXInterrupt (void)
 {
 	/* Сброс флага прерывания */
 	IFS1bits.U2RXIF = 0;
+}
+
+void __attribute__ ((__interrupt__, no_auto_psv))
+_DMA2Interrupt (void)
+{
+	/* Сброс флага прерывания */
+	IFS1bits.DMA2IF = 0;
+	
+	/* Отключение канала DMA */
+	DMA2CONbits.CHEN = 0;
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 
