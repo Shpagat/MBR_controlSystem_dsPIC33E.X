@@ -24,6 +24,7 @@
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
 #include "../../Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_vmc_protocol_communicate.h"
+#include "../../Lib_H_PIC_uart/Lib_H_PIC_uart.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -55,6 +56,11 @@ LRMC_SendCmdForLeftRightMotors(
 
 extern void
 LRMC_StartForce_UART2DMATransmit(
+	unsigned int *pMemSrc,
+	unsigned int cnt);
+
+extern void
+LRMC_Start_UART2DMATramsmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/

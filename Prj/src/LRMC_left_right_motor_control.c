@@ -69,10 +69,10 @@ LRMC_SendCmdForLeftRightMotors(
 		(__VMCPC_FPT__) 0.0f);
 
 //	/* Старт передачи пакета данных */
-	LRMC_StartForce_UART2DMATransmit(
+	LRMC_Start_UART2DMATramsmit(
 		(unsigned int*) p_s,
 		(unsigned int) sizeof(vmcpc_f3m_package_s));
-	
+
 //	PIC_USART_2_TransmitPackageWithOutInterrupt(
 //		(unsigned int*) p_s,
 //		(unsigned int)sizeof(vmcpc_f3m_package_s));
@@ -182,25 +182,37 @@ LRMC_Init_DMA2_ForUart2Tramsmit(
 //	DMA2CONbits.CHEN = 0;
 //
 //	EnableIntDMA2;
+
+	/* 00 = Register Indirect with Post-Increment mode */
+	DMA2CONbits.AMODE = 0b00;
 	
-	DMA2CONbits.AMODE = 0; //	Configure DMA for Register Indirect mode
-//								with post-increment
+	/* 1 = Byte */
 	DMA2CONbits.SIZE = 1;
-	DMA2CONbits.MODE = 1;
-	DMA2CONbits.DIR = 1; // RAM-to-Peripheral data transfers
+	
+	/* 01 = One-Shot, Ping-Pong modes disabled */
+	DMA2CONbits.MODE = 0b01;
+	
+	/* Read from DPSRAM (or RAM) address, write to peripheral address */
+	DMA2CONbits.DIR = 1;
+	
 	DMA2CNT = 0;
-	DMA2REQ = 0b00011111; // Select UART3 Transmitter
+	
+	/* UART2TX – UART2 Transmitter 00011111   */
+	DMA2REQ = 0b00011111;
+	
+	/*  Peripheral Address Register bits */
 	DMA2PAD = (volatile unsigned int) &U2TXREG;
+	
 	DMA2STAL = 0x0000;
 	DMA2STAH = 0x0000;
 	DMA2STBL = 0x0000;
 	DMA2STBH = 0x0000;
-	
-	/*  UART3TX – UART3 Transmitter */
-	DMA2REQbits.IRQSEL = 0b01010011;
 
-	IFS1bits.DMA2IF = 0; // Clear DMA Interrupt Flag
-	IEC1bits.DMA2IE = 1; // Enable DMA Interrupt
+	/* Clear DMA Interrupt Flag */
+	IFS1bits.DMA2IF = 0;
+	
+	/* Enable DMA Interrupt */
+	IEC1bits.DMA2IE = 1;
 }
 
 void
@@ -231,6 +243,19 @@ LRMC_StartForce_UART2DMATransmit(
 	DMA2CONbits.CHEN = 1;
 	DMA2REQbits.FORCE = 1;
 	U2STAbits.UTXEN = 1;
+}
+
+void
+LRMC_Start_UART2DMATramsmit(
+	unsigned int *pMemSrc,
+	unsigned int cnt)
+{
+	if (DMA2CONbits.CHEN == 0)
+	{
+		LRMC_StartForce_UART2DMATransmit(
+			pMemSrc,
+			cnt);
+	}
 }
 
 void __attribute__ ((__interrupt__, auto_psv))
