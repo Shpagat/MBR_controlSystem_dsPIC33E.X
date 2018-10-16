@@ -85,6 +85,7 @@ LRMC_Init_IOPorts(
 	TRISCbits.TRISC13 = 1;
 	RPINR19bits.U2RXR = 0b0111101;
 
+	/* FIXME удалить ANSELD = 0x0000 и проверить роботоспособность */
 	ANSELD = 0x0000;
 	//  "UART 2 <TX>" - "INT0/DMH/RP64/RD0"
 	//  |Function|      |RPnR 5:0 |     |Output Name                 |
@@ -220,6 +221,7 @@ LRMC_StartForce_UART2DMATransmit(
 {
 //	U2STAbits.UTXEN = 0;
 	/* Отключение канала DMA */
+	/* FIXME раскомментировать сторку ниже */
 //	DMA2CONbits.CHEN = 0;
 
 //	unsigned int trash = U2TXREG;
