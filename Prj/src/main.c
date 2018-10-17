@@ -68,12 +68,18 @@ int main(
 		VTMR_GetTimerValue(
 			&compFiltRuntime_s);
 
+		float leftRightMotorControl =
+			RBS_GetMotorControlForBalancingRobot(
+				&RBS_balancingSystem_s,
+				robotPitchAngle,
+				gyr_a[IISMPU_PITCH]);
+
 		if (DMA2CONbits.CHEN == 0)
 		{
 			LRMC_SendCmdForLeftRightMotors(
 				&LRMC_leftRightMotorControlPack_s,
-				(__VMCPC_FPT__) robotPitchAngle,
-				(__VMCPC_FPT__) robotPitchAngle);
+				(__VMCPC_FPT__) leftRightMotorControl,
+				(__VMCPC_FPT__) leftRightMotorControl);
 		}
 
 		/* ################ Отладочная информация ####################### */
@@ -141,6 +147,9 @@ InitAllPeriphAndModules(
 
 	RPA_Init_DataForCalcPitchAngle();
 
+	RBS_Init_BalancingSystem(
+		&RBS_balancingSystem_s);
+	
 	/* Разрешение глобальных прерываний */
 	_GIE = 1;
 }

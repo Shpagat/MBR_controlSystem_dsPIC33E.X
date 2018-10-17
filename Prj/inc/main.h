@@ -35,6 +35,7 @@
 #include "../inc/UDI_uart_debug_information.h"
 #include "../inc/LRMC_left_right_motor_control.h"
 #include "../inc/RPA_robot_pitch_angle.h"
+#include "../inc/RBS_robot_balancing_system.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -43,6 +44,10 @@
 #define INTEGRATE_PERIOD_IN_SEC     ((float)((float)__HARD_PROG_TACT_IN_US__ / 1000000.0f))
 //#define __DI_MAX_PLOTS_IN_PACKAGE__ 30
 //#define __REGUL_FLOAT_POINT_TYPE__ float
+
+#if !defined (__PFPT__)
+#error "Please, set __PRPT__ float or double"
+#endif
 /*#### |End  | <-- Секция - "Определение констант" ###########################*/
 
 
