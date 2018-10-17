@@ -37,3 +37,6 @@
 [submodule "Lib_A_PTWT_prog_tact_with_timer"]
 	path = Lib_A_PTWT_prog_tact_with_timer
 	url = https://github.com/Raptor26/Lib_A_PTWT_prog_tact_with_timer.git
+[submodule "Lib_A_VMCPC_vmc_protocol_communicate"]
+	path = Lib_A_VMCPC_vmc_protocol_communicate
+	url = https://github.com/Raptor26/Lib_A_VMCPC_vmc_protocol_communicate.git

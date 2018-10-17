@@ -12,6 +12,7 @@
       <itemPath>Prj/inc/MC32_hardware_counter_32.h</itemPath>
       <itemPath>Prj/inc/IISMPU_internal_inert_sens_mpu.h</itemPath>
       <itemPath>Prj/inc/PCF_pitch_compl_filt.h</itemPath>
+      <itemPath>Prj/inc/LRMC_left_right_motor_control.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2"
                    displayName="Lib_A_CRC_cyclic_redundancy_check"
@@ -59,6 +60,14 @@
       <itemPath>Lib_A_RGBF_ring_buffer/Lib_A_RGBF_ring_buffer.c</itemPath>
       <itemPath>Lib_A_RGBF_ring_buffer/Lib_A_RGBF_ring_buffer.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="Lib_A_VMCPC_vmc_protocol_communicate"
+                   displayName="Lib_A_VMCPC_vmc_protocol_communicate"
+                   projectFiles="true">
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_vmc_protocol_communicate.c</itemPath>
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_vmc_protocol_communicate.h</itemPath>
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_F3M_vmc_protocol_communicate.c</itemPath>
+      <itemPath>Lib_A_VMCPC_vmc_protocol_communicate/Lib_A_VMCPC_F3M_vmc_protocol_communicate.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="f9"
                    displayName="Lib_A_VTMR_virtual_timers"
                    projectFiles="true">
@@ -103,6 +112,7 @@
       <itemPath>Prj/src/MC32_hardware_counter_32.c</itemPath>
       <itemPath>Prj/src/IISMPU_internal_inert_sens_mpu.c</itemPath>
       <itemPath>Prj/src/PCF_pitch_compl_filt.c</itemPath>
+      <itemPath>Prj/src/LRMC_left_right_motor_control.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -203,7 +213,7 @@
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros"
-                  value="__FRC__;__PCB_758725_124_03__;__DI_MAX_PLOTS_IN_PACKAGE__=30;__REGUL_FLOAT_POINT_TYPE__=float;__HARD_PROG_TACT_IN_US__=10000u;__USE_FRC_FOR_FCY__"/>
+                  value="__FRC__;__PCB_758725_124_03__;__DI_MAX_PLOTS_IN_PACKAGE__=30;__REGUL_FLOAT_POINT_TYPE__=float;__HARD_PROG_TACT_IN_US__=1000u;__USE_FRC_FOR_FCY__;__VMCPC_FPT__=float"/>
         <property key="scalar-model" value="default"/>
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
@@ -279,7 +289,7 @@
       <C30Global>
         <property key="common-include-directories" value=""/>
         <property key="dual-boot-partition" value="0"/>
-        <property key="fast-math" value="false"/>
+        <property key="fast-math" value="true"/>
         <property key="generic-16-bit" value="false"/>
         <property key="legacy-libc" value="true"/>
         <property key="mpreserve-all" value="false"/>

@@ -18,6 +18,8 @@ float acc_a[IISMPU_VECT_SIZE];
 float gyr_a[IISMPU_VECT_SIZE];
 float mpuTemperature;
 pcf_all_dta_for_pitch_s all_dta_for_pitch_s;
+
+char testMessage_a[] = "Hello World.\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -58,14 +60,23 @@ int main(
 		VTMR_StartTimer(
 			&compFiltRuntime_s);
 
-		PCF_UpdatePitchAngle(
-			&all_dta_for_pitch_s,
-			gyr_a[IISMPU_PITCH],
-			acc_a[IISMPU_ROLL],
-			acc_a[IISMPU_YAW]);
+		float robotPitchAngle =
+			PCF_UpdatePitchAngle(
+				&all_dta_for_pitch_s,
+				gyr_a[IISMPU_PITCH],
+				acc_a[IISMPU_ROLL],
+				acc_a[IISMPU_YAW]);
 
 		VTMR_GetTimerValue(
 			&compFiltRuntime_s);
+
+		if (DMA2CONbits.CHEN == 0)
+		{
+			LRMC_SendCmdForLeftRightMotors(
+				&LRMC_leftRightMotorControlPack_s,
+				(__VMCPC_FPT__) robotPitchAngle,
+				(__VMCPC_FPT__) robotPitchAngle);
+		}
 
 		/* ################ Отладочная информация ####################### */
 		/* Формирование отладочного пакета данных */
@@ -118,6 +129,11 @@ InitAllPeriphAndModules(
 
 	/* Инициализация всей периферии для работы с внутренним инерциальным датчиком */
 	IISMPU_Init_AllPeriphForInternalMPU6000();
+
+	/* Инициализация UART2 для передачи команд контроллерам электродвигателей */
+	LRMC_Init_UART_DMA_IOPins(
+		(unsigned int long) FCY,
+		(unsigned int long) 660000UL);
 	/*=== |End  | <-- Секция - "Конфигурирование периферии микроконтроллера" =*/
 
 	VTMR_InitTimerStruct(
