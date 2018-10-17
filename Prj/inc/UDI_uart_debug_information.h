@@ -26,6 +26,7 @@
 #include "../../Lib_H_PIC_uart/Lib_H_PIC_uart.h"
 #include "../../Lib_A_DI_debug_information/Lib_A_DI_debug_information.h"
 #include "../inc/IISMPU_internal_inert_sens_mpu.h"
+#include "../inc/RPA_robot_pitch_angle.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 

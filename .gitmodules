@@ -40,3 +40,6 @@
 [submodule "Lib_A_VMCPC_vmc_protocol_communicate"]
 	path = Lib_A_VMCPC_vmc_protocol_communicate
 	url = https://github.com/Raptor26/Lib_A_VMCPC_vmc_protocol_communicate.git
+[submodule "Lib_A_PCF_pitch_comp_filt"]
+	path = Lib_A_PCF_pitch_comp_filt
+	url = https://github.com/Raptor26/Lib_A_PCF_pitch_comp_filt.git
