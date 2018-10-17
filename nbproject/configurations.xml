@@ -11,8 +11,8 @@
       <itemPath>Prj/inc/UDI_uart_debug_information.h</itemPath>
       <itemPath>Prj/inc/MC32_hardware_counter_32.h</itemPath>
       <itemPath>Prj/inc/IISMPU_internal_inert_sens_mpu.h</itemPath>
-      <itemPath>Prj/inc/PCF_pitch_compl_filt.h</itemPath>
       <itemPath>Prj/inc/LRMC_left_right_motor_control.h</itemPath>
+      <itemPath>Prj/inc/RPA_robot_pitch_angle.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2"
                    displayName="Lib_A_CRC_cyclic_redundancy_check"
@@ -41,6 +41,12 @@
                    projectFiles="true">
       <itemPath>Lib_A_NINTEG_numerical_integration/Lib_A_NINTEG_numerical_integration.c</itemPath>
       <itemPath>Lib_A_NINTEG_numerical_integration/Lib_A_NINTEG_numerical_integration.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="Lib_A_PCF_pitch_comp_filt"
+                   displayName="Lib_A_PCF_pitch_comp_filt"
+                   projectFiles="true">
+      <itemPath>Lib_A_PCF_pitch_comp_filt/Lib_A_PCF_pitch_comp_filt.c</itemPath>
+      <itemPath>Lib_A_PCF_pitch_comp_filt/Lib_A_PCF_pitch_comp_filt.h</itemPath>
     </logicalFolder>
     <logicalFolder name="Lib_A_PTWT_prog_tact_with_timer"
                    displayName="Lib_A_PTWT_prog_tact_with_timer"
@@ -111,8 +117,8 @@
       <itemPath>Prj/src/UDI_uart_debug_information.c</itemPath>
       <itemPath>Prj/src/MC32_hardware_counter_32.c</itemPath>
       <itemPath>Prj/src/IISMPU_internal_inert_sens_mpu.c</itemPath>
-      <itemPath>Prj/src/PCF_pitch_compl_filt.c</itemPath>
       <itemPath>Prj/src/LRMC_left_right_motor_control.c</itemPath>
+      <itemPath>Prj/src/RPA_robot_pitch_angle.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

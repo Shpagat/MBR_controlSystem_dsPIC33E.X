@@ -141,14 +141,7 @@ InitAllPeriphAndModules(
 		(uint16_t*) &TMR7,
 		(uint16_t*) &TMR6);
 
-	/* Инициализация констант для вычисления угла наклона*/
-	pcf_all_dta_for_pitch_init_struct_s init_s;
-	init_s.compFiltCoeff = 0.97f;
-	init_s.integralCoeff = 0.001f;
-	init_s.dT = INTEGRATE_PERIOD_IN_SEC;
-	PCF_Init_CompFilt(
-		&all_dta_for_pitch_s,
-		&init_s);
+
 
 	/* Разрешение глобальных прерываний */
 	_GIE = 1;

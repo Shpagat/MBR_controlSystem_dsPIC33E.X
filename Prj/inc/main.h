@@ -30,7 +30,7 @@
 #include "../inc/HPT_hard_prog_tact.h"
 #include "../inc/MC32_hardware_counter_32.h"
 #include "../inc/IISMPU_internal_inert_sens_mpu.h"
-#include "../../Lib_A_PCF_pitch_comp_filt/PCF_pitch_comp_filt.h"
+#include "../../Lib_A_PCF_pitch_comp_filt/Lib_A_PCF_pitch_comp_filt.h"
 #include "../../Lib_A_VTMR_virtual_timers/Lib_A_VTMR_virtual_timers.h"
 #include "../inc/UDI_uart_debug_information.h"
 #include "../inc/LRMC_left_right_motor_control.h"
