@@ -13,6 +13,7 @@
       <itemPath>Prj/inc/IISMPU_internal_inert_sens_mpu.h</itemPath>
       <itemPath>Prj/inc/LRMC_left_right_motor_control.h</itemPath>
       <itemPath>Prj/inc/RPA_robot_pitch_angle.h</itemPath>
+      <itemPath>Prj/inc/RBS_robot_balancing_system.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2"
                    displayName="Lib_A_CRC_cyclic_redundancy_check"
@@ -119,6 +120,7 @@
       <itemPath>Prj/src/IISMPU_internal_inert_sens_mpu.c</itemPath>
       <itemPath>Prj/src/LRMC_left_right_motor_control.c</itemPath>
       <itemPath>Prj/src/RPA_robot_pitch_angle.c</itemPath>
+      <itemPath>Prj/src/RBS_robot_balancing_system.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

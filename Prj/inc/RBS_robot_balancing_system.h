@@ -7,8 +7,8 @@
  */
 
 
-#ifndef ${include_guard_symbol}
-#define ${include_guard_symbol}
+#ifndef RBS_ROBOT_BALANCING_SYSTEM_H_
+#define RBS_ROBOT_BALANCING_SYSTEM_H_
 
 
 /*#### |Begin| --> Секция - "Include" ########################################*/
@@ -19,6 +19,8 @@
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
+#include "../inc/RPA_robot_pitch_angle.h"
+#include "../../Lib_A_REGUL_regulators/Lib_A_REGUL_regulators.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
 
@@ -42,7 +44,7 @@
 /*#### |Begin| --> Секция - "Определение макросов" ###########################*/
 /*#### |End  | <-- Секция - "Определение макросов" ###########################*/
 
-#endif	/* ${include_guard_symbol} */
+#endif	/* RBS_ROBOT_BALANCING_SYSTEM_H_ */
 
 /*############################################################################*/
 /*################################ END OF FILE ###############################*/
