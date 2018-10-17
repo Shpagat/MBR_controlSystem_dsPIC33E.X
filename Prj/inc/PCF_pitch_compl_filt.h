@@ -65,7 +65,7 @@ typedef struct
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
 extern void
-PCF_InitPitchData(
+PCF_Init_CompFilt(
 	pcf_all_dta_for_pitch_s *p_s,
 	pcf_all_dta_for_pitch_init_struct_s *init_s);
 

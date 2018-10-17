@@ -61,9 +61,9 @@ int main(
 			&compFiltRuntime_s);
 
 		float robotPitchAngle =
-			PCF_UpdatePitchAngle(
+			PCF_GetPitchByCompFilt(
 				&all_dta_for_pitch_s,
-				gyr_a[IISMPU_PITCH],
+				&gyr_a[IISMPU_PITCH],
 				acc_a[IISMPU_ROLL],
 				acc_a[IISMPU_YAW]);
 
@@ -146,7 +146,7 @@ InitAllPeriphAndModules(
 	init_s.compFiltCoeff = 0.97f;
 	init_s.integralCoeff = 0.001f;
 	init_s.dT = INTEGRATE_PERIOD_IN_SEC;
-	PCF_InitPitchData(
+	PCF_Init_CompFilt(
 		&all_dta_for_pitch_s,
 		&init_s);
 
