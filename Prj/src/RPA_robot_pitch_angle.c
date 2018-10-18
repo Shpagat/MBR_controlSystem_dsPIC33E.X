@@ -45,7 +45,7 @@ RPA_Init_DataForCalcPitchAngle(
 {
 	/* Инициализация констант для вычисления угла наклона*/
 	pcf_all_dta_for_pitch_init_struct_s init_s;
-	init_s.compFiltCoeff	= 0.999f;
+	init_s.compFiltCoeff	= 0.9995f;
 	init_s.integralCoeff	= 0.00001f;
 	init_s.dT				= INTEGRATE_PERIOD_IN_SEC;
 	PCF_Init_CompFilt(

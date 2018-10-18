@@ -22,6 +22,7 @@
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/
 #include "../inc/RPA_robot_pitch_angle.h"
 #include "../../Lib_A_REGUL_regulators/Lib_A_REGUL_regulators.h"
+#include "../../Lib_A_FILT_filters.c/Lib_A_FILT_filters.h"
 #include "main.h"
 /*==== |End  | <-- Секция - "Extern libraries" ===============================*/
 /*#### |End  | <-- Секция - "Include" ########################################*/
@@ -42,8 +43,11 @@ typedef enum
 
 typedef struct
 {
-	regul_pid_s pid_s;
+	regul_pid_s pdForBalance_s;
+    regul_pid_s piForErr;
 	__PFPT__ motorControl_a[RBS_MOTOR_NUMB];
+    __PFPT__ desiredAngle;
+    FILT_comp_filt_s compFilt_s;
 } rbs_balancing_system_s;
 /*#### |End  | <-- Секция - "Определение типов" ##############################*/
 

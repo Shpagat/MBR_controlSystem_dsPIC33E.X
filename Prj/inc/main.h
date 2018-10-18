@@ -45,6 +45,7 @@
 //#define __DI_MAX_PLOTS_IN_PACKAGE__ 30
 //#define __REGUL_FLOAT_POINT_TYPE__ float
 
+#define __PFPT__  float
 #if !defined (__PFPT__)
 #error "Please, set __PRPT__ float or double"
 #endif
