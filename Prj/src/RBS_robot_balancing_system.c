@@ -49,17 +49,25 @@ RBS_GetMotorControlForBalancingRobot(
 	__PFPT__ pitchAngle,
 	__PFPT__ pitchAngularSpeed)
 {
-	p_s->motorControl =
+	/* Получить управляющее воздействие для балансирования */
+	p_s->motorControl_a[RBS_RIGHT_MOTOR] =
 		REGUL_Get_PID(
 			&p_s->pid_s,
 			pitchAngle,
 			pitchAngularSpeed);
 
+	/* Если угол наклона больше некого значения по модулю, то необходимо 
+	 * управляющее воздействие установить в нуль */
 	if (fabsf((float)pitchAngle) > (float) 1.0)
 	{
-		p_s->motorControl = (__PFPT__) 0.0;
+		p_s->motorControl_a[RBS_RIGHT_MOTOR] = (__PFPT__) 0.0;
 	}
-	return (p_s->motorControl);
+	
+	/* Управляющее воздействие для правого и лового моторов одно и тоже */
+	p_s->motorControl_a[RBS_LEFT_MOTOR] = 
+		p_s->motorControl_a[RBS_RIGHT_MOTOR];
+	
+	return (p_s->motorControl_a[RBS_RIGHT_MOTOR]);
 }
 /*#### |End  | <-- Секция - "Описание глобальных функций" ####################*/
 

@@ -61,7 +61,7 @@ UDI_GetAndSendDebugPackForSerialPlot(
 			RPA_copmFiltDataForPitch_s.angle,
 			RPA_copmFiltDataForPitch_s.err,
 		
-			RBS_balancingSystem_s.motorControl,
+			RBS_balancingSystem_s.motorControl_a,
 
 			/* Терминальный символ, должен быть крайним параметром для
 			 * функции DI_CopyDataForSerialPlot_f32() */

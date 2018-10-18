@@ -32,10 +32,18 @@
 
 
 /*#### |Begin| --> Секция - "Определение типов" ##############################*/
+typedef enum
+{
+	RBS_LEFT_MOTOR = 0,
+	RBS_RIGHT_MOTOR,
+
+	RBS_MOTOR_NUMB,
+} rbs_left_right_motors_e;
+
 typedef struct
 {
 	regul_pid_s pid_s;
-	__PFPT__ motorControl;
+	__PFPT__ motorControl_a[RBS_MOTOR_NUMB];
 } rbs_balancing_system_s;
 /*#### |End  | <-- Секция - "Определение типов" ##############################*/
 
