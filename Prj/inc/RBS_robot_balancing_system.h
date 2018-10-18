@@ -34,9 +34,9 @@
 /*#### |Begin| --> Секция - "Определение типов" ##############################*/
 typedef struct
 {
-  regul_pid_s pid_s;
-  __PFPT__ motorControl;
-}rbs_balancing_system_s;
+	regul_pid_s pid_s;
+	__PFPT__ motorControl;
+} rbs_balancing_system_s;
 /*#### |End  | <-- Секция - "Определение типов" ##############################*/
 
 
