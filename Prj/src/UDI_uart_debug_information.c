@@ -56,12 +56,12 @@ UDI_GetAndSendDebugPackForSerialPlot(
 			gyr_a[IISMPU_ROLL],
 			gyr_a[IISMPU_PITCH],
 			gyr_a[IISMPU_YAW],
-
-			/* Расчёт углов наклона */
+//
+//			/* Расчёт углов наклона */
 			RPA_copmFiltDataForPitch_s.angle,
 			RPA_copmFiltDataForPitch_s.err,
-		
-			RBS_balancingSystem_s.motorControl_a,
+//		
+			RBS_balancingSystem_s.motorControl,
 
 			/* Терминальный символ, должен быть крайним параметром для
 			 * функции DI_CopyDataForSerialPlot_f32() */
@@ -172,26 +172,11 @@ UDI_StartUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt)
 {
-	if (DMA3CONbits.CHEN == 0)
+	if ((DMA3CONbits.CHEN == 0) && (U3STAbits.TRMT == 1))
 	{
-		unsigned int trash = U3TXREG;
-		trash = U3TXREG;
-		trash = U3TXREG;
-		trash = U3TXREG;
-
-		/* Сброс флага Overrun модуля UART */
-		U3STAbits.OERR = 0;
-
-		/* Присваивание адреса в памяти */
-		DMA3STAL = (unsigned int)pMemSrc;
-//	DMA3STAH = (unsigned int)pMemSrc;
-
-		// Выставка количества байт, которое необходимо передать;
-		DMA3CNTbits.CNT = cnt - 1;
-
-		// Старт канала DMA;
-		DMA3CONbits.CHEN = 1;
-		DMA3REQbits.FORCE = 1;
+UDI_StartForceUart3_DMA3_Transmit(
+	pMemSrc, 
+	cnt);
 	}
 }
 
@@ -202,11 +187,6 @@ UDI_StartForceUart3_DMA3_Transmit(
 {
 	/* Отключение канала DMA */
 	DMA3CONbits.CHEN = 0;
-
-	unsigned int trash = U3TXREG;
-	trash = U3TXREG;
-	trash = U3TXREG;
-	trash = U3TXREG;
 
 	/* Сброс флага Overrun модуля UART */
 	U3STAbits.OERR = 0;

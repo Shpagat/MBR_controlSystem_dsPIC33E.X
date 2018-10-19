@@ -18,7 +18,7 @@ float acc_a[IISMPU_VECT_SIZE];
 float gyr_a[IISMPU_VECT_SIZE];
 float mpuTemperature;
 
-char testMessage_a[] = "Hello World.\n";
+char testMessage_a[] = "Hello World.\r\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -121,7 +121,7 @@ InitAllPeriphAndModules(
 	/* Инициализация UART модуля для передачи отладочной информации */
 	UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 		(unsigned int long) FCY,
-		(unsigned int long) 115200UL);
+		(unsigned int long) 9600UL);
 
 	/* Инициализация аппаратного таймера для тактирования цикла while(1) */
 	HPT_Init_TMR9ForProgTact_PTWTLibrary(
