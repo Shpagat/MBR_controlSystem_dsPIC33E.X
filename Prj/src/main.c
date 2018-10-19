@@ -20,8 +20,7 @@ float mpuTemperature;
 
 char testMessage_a[] = "Hello World.\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
-
-
+char receiveTestMessage[64];
 /*#### |Begin| --> Секция - "Локальные переменные" ###########################*/
 VTMR_tmr_s compFiltRuntime_s;
 /*#### |End  | <-- Секция - "Локальные переменные" ###########################*/
@@ -84,8 +83,15 @@ int main(
 
 		/* ################ Отладочная информация ####################### */
 		/* Формирование отладочного пакета данных */
-		UDI_GetAndSendDebugPackForSerialPlot(
-			&UDI_serialPlotDataPackage_s);
+//		UDI_GetAndSendDebugPackForSerialPlot(
+//			&UDI_serialPlotDataPackage_s);
+        
+        UDI_StartUart3_DMA3_Transmit((unsigned int*)testMessage_a, strlen(testMessage_a));
+        
+        if (DMA4CONbits.CHEN == 0)
+        {
+//            UDI_StartForceUart3_DMA4_Receiver((unsigned int*)receiveTestMessage, 15);
+        }
 		/* ############################################################## */
 
 		PTWT_ProgTactEndLoop(
