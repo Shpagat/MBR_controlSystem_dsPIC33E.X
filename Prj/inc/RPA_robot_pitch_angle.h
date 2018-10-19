@@ -49,6 +49,7 @@ extern float
 RPA_GetPitchAngle(
 	float *pGyrPitch,
 	float accX,
+	float accY,
 	float accZ);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 

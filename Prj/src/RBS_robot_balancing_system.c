@@ -77,11 +77,11 @@ RBS_GetControlForRobot(
 	/* Иначе, штатный режим работы */
 	else
 	{
-		/* Текущая скорость задается как управляющее воздействие 
+		/* Текущая скорость задается как управляющее воздействие
 		 * на электродвигатели */
-		p_s->speedControl_s.currSpeed = 
+		p_s->speedControl_s.currSpeed =
 			p_s->motorControl;
-		
+
 		/* Расчет заданного угла наклона */
 		p_s->desiredAngle =
 			RBS_GetDesiredAngle(
@@ -92,7 +92,7 @@ RBS_GetControlForRobot(
 			p_s,
 			pitchAngle,
 			pitchAngularSpeed);
-		
+
 		/* Расчет управления для вращения по азимуту */
 	}
 
@@ -111,26 +111,26 @@ RBS_GetDesiredAngle(
 		FILT_ComplFilt_f32(
 			&pSpeedControl_s->compFilt_s,
 			pSpeedControl_s->currSpeed);
-	
+
 	/* Ошибка скорости*/
 	__PFPT__ error =
 		-pSpeedControl_s->target + pSpeedControl_s->currSpeedFilt;
 
 //	pSpeedControl_s->piRegulator_s.proportional_s.kP = -(((error*error) * 0.001f) + 0.01);
-	
+
 //	if (fabsf(pSpeedControl_s->piRegulator_s.proportional_s.kP) > 0.2)
 //	{
 //		pSpeedControl_s->piRegulator_s.proportional_s.kP = -0.2f;
 //	}
 //	pSpeedControl_s->piRegulator_s.integral_s.kI = -(((error*error) * 10.0f) + 0.1);
-	
+
 	/* Формирование заданного угла наклона */
 	__PFPT__ desiredAngle =
 		REGUL_Get_PID(
 			&pSpeedControl_s->piRegulator_s,
 			error,
 			NULL);
-	
+
 
 
 	return (desiredAngle);
@@ -155,7 +155,7 @@ RBS_GetControlForBalance(
 			error,
 			NULL);
 
-	/* Копирование найденного значения управляющего воздействия в переменные 
+	/* Копирование найденного значения управляющего воздействия в переменные
 	 * для правого и лового моторов */
 	p_s->motorControl_a[RBS_LEFT_MOTOR] =
 		p_s->motorControl;
@@ -228,11 +228,11 @@ RBS_Init_KI_ForFormationDesiredPitchAngle(
 
 	/* Коэффициент пропорциональной составляющей регулятора */
 	pidInit_s.kP =
-		(__REGUL_FPT__) -0.03;
+		(__REGUL_FPT__) - 0.03;
 
 	/* Коэффициент интегральной составляющей регулятора */
 	pidInit_s.kI =
-		(__REGUL_FPT__) -0.9;
+		(__REGUL_FPT__) - 0.9;
 
 	/* Значение насыщения интегральной составляющей */
 	pidInit_s.integralValSaturation =

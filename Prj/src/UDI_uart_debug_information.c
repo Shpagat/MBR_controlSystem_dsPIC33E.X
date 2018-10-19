@@ -60,8 +60,10 @@ UDI_GetAndSendDebugPackForSerialPlot(
 //			/* Расчёт углов наклона */
 			RPA_copmFiltDataForPitch_s.angle,
 			RPA_copmFiltDataForPitch_s.err,
-//		
+//
 			RBS_balancingSystem_s.motorControl,
+
+			RPA_copmFiltDataForPitch_s.accNorm,
 
 			/* Терминальный символ, должен быть крайним параметром для
 			 * функции DI_CopyDataForSerialPlot_f32() */
@@ -174,9 +176,9 @@ UDI_StartUart3_DMA3_Transmit(
 {
 	if ((DMA3CONbits.CHEN == 0) && (U3STAbits.TRMT == 1))
 	{
-UDI_StartForceUart3_DMA3_Transmit(
-	pMemSrc, 
-	cnt);
+		UDI_StartForceUart3_DMA3_Transmit(
+			pMemSrc,
+			cnt);
 	}
 }
 

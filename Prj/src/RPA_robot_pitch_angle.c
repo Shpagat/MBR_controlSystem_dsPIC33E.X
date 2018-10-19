@@ -30,12 +30,14 @@ float
 RPA_GetPitchAngle(
 	float *pGyrPitch,
 	float accX,
+	float accY,
 	float accZ)
 {
 	return (PCF_GetPitchByCompFilt(
 				&RPA_copmFiltDataForPitch_s,
 				pGyrPitch,
 				accX,
+				accY,
 				accZ));
 }
 
@@ -45,9 +47,12 @@ RPA_Init_DataForCalcPitchAngle(
 {
 	/* Инициализация констант для вычисления угла наклона*/
 	pcf_all_dta_for_pitch_init_struct_s init_s;
-	init_s.compFiltCoeff	= 0.99995f;
-	init_s.integralCoeff	= 0.00001f;
-	init_s.dT				= INTEGRATE_PERIOD_IN_SEC;
+	PCF_CompFilt_StructInit(
+		&init_s);
+	init_s.compFiltCoeff	= (__PCF_FPT__) 0.9996f;
+	init_s.integralCoeff	= (__PCF_FPT__) 0.00001f;
+	init_s.dT				= (__PCF_FPT__) INTEGRATE_PERIOD_IN_SEC;
+	init_s.accNormWindow	= (__PCF_FPT__) 0.1;
 	PCF_Init_CompFilt(
 		&RPA_copmFiltDataForPitch_s,
 		&init_s);

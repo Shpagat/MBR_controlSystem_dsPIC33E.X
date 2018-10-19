@@ -63,6 +63,7 @@ int main(
 			RPA_GetPitchAngle(
 				&gyr_a[IISMPU_PITCH],
 				acc_a[IISMPU_ROLL],
+				acc_a[IISMPU_PITCH],
 				acc_a[IISMPU_YAW]);
 
 		VTMR_GetTimerValue(
@@ -121,7 +122,7 @@ InitAllPeriphAndModules(
 	/* Инициализация UART модуля для передачи отладочной информации */
 	UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 		(unsigned int long) FCY,
-		(unsigned int long) 9600UL);
+		(unsigned int long) 660000UL);
 
 	/* Инициализация аппаратного таймера для тактирования цикла while(1) */
 	HPT_Init_TMR9ForProgTact_PTWTLibrary(
