@@ -69,7 +69,7 @@ int main(
 			&compFiltRuntime_s);
 
 		__PFPT__ leftRightMotorControl =
-			RBS_GetMotorControlForBalancingRobot(
+			RBS_GetControlForRobot(
 				&RBS_balancingSystem_s,
 				robotPitchAngle,
 				gyr_a[IISMPU_PITCH]);

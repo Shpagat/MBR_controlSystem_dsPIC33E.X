@@ -43,11 +43,40 @@ typedef enum
 
 typedef struct
 {
+   /**
+       * @brief Целевая скорость, которую нужно достич
+       */
+      __PFPT__ target;
+      
+      /**
+       * @brief Текущая скорость
+       */
+      __PFPT__ currSpeed;
+      
+      /**
+       * @brief Текущая скорость с применением фильтра
+       */
+      __PFPT__ currSpeedFilt;
+      
+      /**
+       * @brief Комплементарный фильтр для фильтрации текущей скорости
+       */
+      FILT_comp_filt_s compFilt_s;
+      
+      regul_pid_s piRegulator_s;
+} rbs_speed_control_s;
+
+typedef struct
+{
 	regul_pid_s pdForBalance_s;
-    regul_pid_s piForErr;
 	__PFPT__ motorControl_a[RBS_MOTOR_NUMB];
-    __PFPT__ desiredAngle;
-    FILT_comp_filt_s compFilt_s;
+	__PFPT__ motorControl;
+	__PFPT__ desiredAngle;
+    
+    /**
+     * @brief Структура для управления скорость движения робота
+     */
+    rbs_speed_control_s speedControl_s;
 } rbs_balancing_system_s;
 /*#### |End  | <-- Секция - "Определение типов" ##############################*/
 
@@ -63,7 +92,7 @@ RBS_Init_BalancingSystem(
 	rbs_balancing_system_s *p_s);
 
 extern __PFPT__
-RBS_GetMotorControlForBalancingRobot(
+RBS_GetControlForRobot(
 	rbs_balancing_system_s *p_s,
 	__PFPT__ pitchAngle,
 	__PFPT__ pitchAngularSpeed);
