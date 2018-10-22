@@ -21,6 +21,7 @@
 
 /*==== |Begin| --> Секция - "MK peripheral libraries" ========================*/
 #include <xc.h>
+#include <libpic30.h>
 /*==== |End  | <-- Секция - "MK peripheral libraries" ========================*/
 
 /*==== |Begin| --> Секция - "Extern libraries" ===============================*/

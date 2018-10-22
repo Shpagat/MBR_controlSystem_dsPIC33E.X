@@ -58,6 +58,8 @@ RBS_Init_BalancingSystem(
 	p_s->speedControl_s.compFilt_s.filtCoeff = 0.99;
 
 	p_s->desiredAngle = (__PFPT__) 0.0;
+
+	p_s->startSystem_flag = 0u;
 }
 
 __PFPT__
@@ -66,16 +68,25 @@ RBS_GetControlForRobot(
 	__PFPT__ pitchAngle,
 	__PFPT__ pitchAngularSpeed)
 {
+	if ((p_s->startSystem_flag == 0u) && (fabsf((float)pitchAngle) < 0.01f))
+	{
+		p_s->startSystem_flag = 1u;
+	}
 	/* Если угол наклона больше некого значения по модулю, то необходимо
 	 * управляющее воздействие установить в нуль */
-	if (fabsf((float)pitchAngle) > (float) 1.59)
+	if (fabsf((float)pitchAngle) > (float) 1.3)
 	{
-		p_s->motorControl = (__PFPT__) 0.0;
-		p_s->motorControl_a[RBS_LEFT_MOTOR] = (__PFPT__) 0.0;
-		p_s->motorControl_a[RBS_RIGHT_MOTOR] = (__PFPT__) 0.0;
+		p_s->motorControl						= (__PFPT__) 0.0;
+		p_s->motorControl_a[RBS_LEFT_MOTOR]	= (__PFPT__) 0.0;
+		p_s->motorControl_a[RBS_RIGHT_MOTOR]	= (__PFPT__) 0.0;
+		p_s->speedControl_s.currSpeed			= (__PFPT__) 0.0;
+		p_s->speedControl_s.currSpeedFilt		= (__PFPT__) 0.0;
+		p_s->speedControl_s.target				= (__PFPT__) 0.0;
+		p_s->speedControl_s.piRegulator_s.integral_s.val = (__PFPT__) 0.0;
+		p_s->startSystem_flag = 0u;
 	}
 	/* Иначе, штатный режим работы */
-	else
+	else if (p_s->startSystem_flag == 1u)
 	{
 		/* Текущая скорость задается как управляющее воздействие
 		 * на электродвигатели */
@@ -116,13 +127,15 @@ RBS_GetDesiredAngle(
 	__PFPT__ error =
 		-pSpeedControl_s->target + pSpeedControl_s->currSpeedFilt;
 
-//	pSpeedControl_s->piRegulator_s.proportional_s.kP = -(((error*error) * 0.001f) + 0.01);
+	pSpeedControl_s->piRegulator_s.proportional_s.kP = -(((fabsf(error)) * 9.01f) + 0.0005);
+//	pSpeedControl_s->piRegulator_s.integral_s.kI =
+//		pSpeedControl_s->piRegulator_s.proportional_s.kP * 1.0f;
 
-//	if (fabsf(pSpeedControl_s->piRegulator_s.proportional_s.kP) > 0.2)
-//	{
-//		pSpeedControl_s->piRegulator_s.proportional_s.kP = -0.2f;
-//	}
-//	pSpeedControl_s->piRegulator_s.integral_s.kI = -(((error*error) * 10.0f) + 0.1);
+	if (fabsf(pSpeedControl_s->piRegulator_s.proportional_s.kP) > 0.01)
+	{
+		pSpeedControl_s->piRegulator_s.proportional_s.kP = -0.01f;
+	}
+	pSpeedControl_s->piRegulator_s.integral_s.kI = -(((fabsf(error)) * 5.0f) + 0.01);
 
 	/* Формирование заданного угла наклона */
 	__PFPT__ desiredAngle =
@@ -153,7 +166,7 @@ RBS_GetControlForBalance(
 		REGUL_Get_PID(
 			&p_s->pdForBalance_s,
 			error,
-			NULL);
+			pitchAngularSpeed);
 
 	/* Копирование найденного значения управляющего воздействия в переменные
 	 * для правого и лового моторов */
@@ -184,7 +197,7 @@ RBS_Init_PD_ForRetentionDesiredPitchAngle(
 
 	/* Коэффициент пропорциональной составляющей регулятора */
 	pidInit_s.kP =
-		(__REGUL_FPT__) 30.0;
+		(__REGUL_FPT__) 50.0;
 
 	/* Коэффициент интегральной составляющей регулятора */
 	pidInit_s.kI =
@@ -192,15 +205,15 @@ RBS_Init_PD_ForRetentionDesiredPitchAngle(
 
 	/* Коэффициент дифференциальной составляющей регулятора */
 	pidInit_s.kD =
-		(__REGUL_FPT__) 0.15;
+		(__REGUL_FPT__) 0.20;
 
 	/* Значение насыщения интегральной составляющей */
 	pidInit_s.integralValSaturation =
-		(__REGUL_FPT__) 0.99;
+		(__REGUL_FPT__) 0.9999;
 
 	/* Значение насыщения выходной величины регулятора */
 	pidInit_s.returnValSaturation =
-		(__REGUL_FPT__) 0.99;
+		(__REGUL_FPT__) 0.9999;
 
 	/* Инициализация структуры регулятора */
 	REGUL_Init_PID(
@@ -228,19 +241,19 @@ RBS_Init_KI_ForFormationDesiredPitchAngle(
 
 	/* Коэффициент пропорциональной составляющей регулятора */
 	pidInit_s.kP =
-		(__REGUL_FPT__) - 0.03;
+		(__REGUL_FPT__) - 0.0005;
 
 	/* Коэффициент интегральной составляющей регулятора */
 	pidInit_s.kI =
-		(__REGUL_FPT__) - 0.9;
+		(__REGUL_FPT__) - 1.1;
 
 	/* Значение насыщения интегральной составляющей */
 	pidInit_s.integralValSaturation =
-		(__REGUL_FPT__) 0.95;
+		(__REGUL_FPT__) RBS_45DEG_IN_RAD * 0.5;
 
 	/* Значение насыщения выходной величины регулятора */
 	pidInit_s.returnValSaturation =
-		(__REGUL_FPT__) 0.95;
+		(__REGUL_FPT__) RBS_45DEG_IN_RAD * 0.5;
 
 	/* Инициализация структуры регулятора */
 	REGUL_Init_PID(

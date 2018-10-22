@@ -73,7 +73,8 @@ int main(
 			RBS_GetControlForRobot(
 				&RBS_balancingSystem_s,
 				robotPitchAngle,
-				gyr_a[IISMPU_PITCH]);
+				NULL);
+//				gyr_a[IISMPU_PITCH]);
 
 		if (DMA2CONbits.CHEN == 0)
 		{
@@ -115,7 +116,11 @@ InitAllPeriphAndModules(
 #else
 #error "Please, set source for system clock"
 #endif
-
+	
+	/* Задержка чтобы успел проинициализироваться констроллер 
+	 * векторного управления */
+	__delay_ms(100u);
+	
 	/* Инициализация светодиодов платы */
 	BLEDS_Init_AllLeds();
 
@@ -150,7 +155,7 @@ InitAllPeriphAndModules(
 
 	RBS_Init_BalancingSystem(
 		&RBS_balancingSystem_s);
-	
+		
 	/* Разрешение глобальных прерываний */
 	_GIE = 1;
 }
