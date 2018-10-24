@@ -18,7 +18,7 @@ float acc_a[IISMPU_VECT_SIZE];
 float gyr_a[IISMPU_VECT_SIZE];
 float mpuTemperature;
 
-char testMessage_a[] = "Hello World.\n";
+char testMessage_a[] = "Hello World.\r\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -63,16 +63,18 @@ int main(
 			RPA_GetPitchAngle(
 				&gyr_a[IISMPU_PITCH],
 				acc_a[IISMPU_ROLL],
+				acc_a[IISMPU_PITCH],
 				acc_a[IISMPU_YAW]);
 
 		VTMR_GetTimerValue(
 			&compFiltRuntime_s);
 
 		__PFPT__ leftRightMotorControl =
-			RBS_GetMotorControlForBalancingRobot(
+			RBS_GetControlForRobot(
 				&RBS_balancingSystem_s,
 				robotPitchAngle,
-				gyr_a[IISMPU_PITCH]);
+				NULL);
+//				gyr_a[IISMPU_PITCH]);
 
 		if (DMA2CONbits.CHEN == 0)
 		{
@@ -114,14 +116,18 @@ InitAllPeriphAndModules(
 #else
 #error "Please, set source for system clock"
 #endif
-
+	
+	/* Задержка чтобы успел проинициализироваться констроллер 
+	 * векторного управления */
+	__delay_ms(100u);
+	
 	/* Инициализация светодиодов платы */
 	BLEDS_Init_AllLeds();
 
 	/* Инициализация UART модуля для передачи отладочной информации */
 	UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 		(unsigned int long) FCY,
-		(unsigned int long) 115200UL);
+		(unsigned int long) 660000UL);
 
 	/* Инициализация аппаратного таймера для тактирования цикла while(1) */
 	HPT_Init_TMR9ForProgTact_PTWTLibrary(
@@ -149,7 +155,7 @@ InitAllPeriphAndModules(
 
 	RBS_Init_BalancingSystem(
 		&RBS_balancingSystem_s);
-	
+		
 	/* Разрешение глобальных прерываний */
 	_GIE = 1;
 }

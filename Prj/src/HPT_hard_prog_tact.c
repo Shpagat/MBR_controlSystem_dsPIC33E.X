@@ -35,11 +35,17 @@ HPT_Init_TMR9ForProgTact_PTWTLibrary(
 {
 	/* Инициализация структуры для тактирования программы */
 	ptwt_prog_tact_init_struct_s progTactInit_s;
+	PTWT_ProgTact_StructInit(
+		&progTactInit_s);
 	progTactInit_s.pHardCnt			= (uint16_t*) &TMR9;
 	progTactInit_s.progTactTime		= cnt;
-	PTWT_Init_ProgTactStruct(
-		&HPT_hardProgTact_s,
-		&progTactInit_s);
+	ptwt_fnc_status_e initStatus_e =
+		PTWT_Init_ProgTact(
+			&HPT_hardProgTact_s,
+			&progTactInit_s);
+	while (initStatus_e != PTWT_SUCCESS)
+	{
+	};
 
 	/* Инициализация аппаратного таймера */
 	HPT_Init_TMRForProg_Tact(cnt);

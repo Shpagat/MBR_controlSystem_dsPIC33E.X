@@ -10,7 +10,7 @@
 
 #include <xc.h>
 
-#if defined (__FRC__)
+#if defined (__USE_FRC_FOR_FCY__)
 // DSPIC33EP256MU806 Configuration Bit Settings
 // 'C' source line config statements
 
@@ -54,7 +54,7 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
-#elif defined (__HS_16_MHZ__)
+#elif defined (__USE_HS_16_MHz_FOR_FCY__)
 // DSPIC33EP256MU806 Configuration Bit Settings
 // 'C' source line config statements
 

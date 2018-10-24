@@ -33,6 +33,9 @@
 
 
 /*#### |Begin| --> Секция - "Определение типов" ##############################*/
+#define RBS_90DEG_IN_RAD      ((__PFPT__)((3.14159265)*0.5))
+#define RBS_45DEG_IN_RAD      ((RBS_90DEG_IN_RAD * ((__PFPT__)0.5)))
+#define RBS_30DEG_IN_RAD      ((RBS_90DEG_IN_RAD) * ((__PFPT__)0.33333333))
 typedef enum
 {
 	RBS_LEFT_MOTOR = 0,
@@ -43,11 +46,42 @@ typedef enum
 
 typedef struct
 {
+	/**
+	    * @brief Целевая скорость, которую нужно достичь
+	    */
+	__PFPT__ target;
+
+	/**
+	 * @brief Текущая скорость
+	 */
+	__PFPT__ currSpeed;
+
+	/**
+	 * @brief Текущая скорость с применением фильтра
+	 */
+	__PFPT__ currSpeedFilt;
+
+	/**
+	 * @brief Комплементарный фильтр для фильтрации текущей скорости
+	 */
+	filt_complementary_s compFilt_s;
+
+	regul_pid_s piRegulator_s;
+} rbs_speed_control_s;
+
+typedef struct
+{
 	regul_pid_s pdForBalance_s;
-    regul_pid_s piForErr;
 	__PFPT__ motorControl_a[RBS_MOTOR_NUMB];
-    __PFPT__ desiredAngle;
-    FILT_comp_filt_s compFilt_s;
+	__PFPT__ motorControl;
+	__PFPT__ desiredAngle;
+
+	/**
+	 * @brief Структура для управления скорость движения робота
+	 */
+	rbs_speed_control_s speedControl_s;
+    
+    size_t startSystem_flag;
 } rbs_balancing_system_s;
 /*#### |End  | <-- Секция - "Определение типов" ##############################*/
 
@@ -63,7 +97,7 @@ RBS_Init_BalancingSystem(
 	rbs_balancing_system_s *p_s);
 
 extern __PFPT__
-RBS_GetMotorControlForBalancingRobot(
+RBS_GetControlForRobot(
 	rbs_balancing_system_s *p_s,
 	__PFPT__ pitchAngle,
 	__PFPT__ pitchAngularSpeed);

@@ -221,7 +221,7 @@
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros"
-                  value="__FRC__;__PFPT__=float;__PCB_758725_124_03__;__DI_MAX_PLOTS_IN_PACKAGE__=30;__HARD_PROG_TACT_IN_US__=1000u;__USE_FRC_FOR_FCY__;__REGUL_FPT__=__PFPT__;__VMCPC_FPT__=__PFPT__;__NUNTEG_FPT__=__PFPT__;__DIFF_FPT__=__PFPT__;__PCF_FPT__=__PFPT__"/>
+                  value="__USE_HS_16_MHz_FOR_FCY__;__PFPT__=float;__PCB_758725_124_03__;__DI_MAX_PLOTS_IN_PACKAGE__=30;__HARD_PROG_TACT_IN_US__=1000u;__VMCPC_FPT__=__PFPT__;__NINTEG_FPT__=&apos;f&apos;;__DIFF_FPT__=&apos;f&apos;;__PCF_FPT__=&apos;f&apos;;__REGUL_FPT__=&apos;f&apos;;__FILT_FPT__=&apos;f&apos;"/>
         <property key="scalar-model" value="default"/>
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
