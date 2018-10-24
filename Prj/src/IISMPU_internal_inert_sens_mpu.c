@@ -168,10 +168,10 @@ IISMPU_Init_MPU6000(
 	IISMPU_SPIFnc_s.Transmit_8bits = PIC_SPI1_Master_Transmit_8bits;
 
 	mpu60x0_regs_s mpu6000ConfigRegs_s;
-	mpu6000ConfigRegs_s.accelConf_28 = MPU60x0_BIT_AFS_SEL_4;
+	mpu6000ConfigRegs_s.accelConf_28 = MPU60x0_BIT_AFS_SEL_16;
 	mpu6000ConfigRegs_s.dlpf_26 = MPU60x0_BIT_DLPF_CFG_256;
 	mpu6000ConfigRegs_s.fifo_En_35 = 0x00;
-	mpu6000ConfigRegs_s.gyroConf_27 = MPU60x0_BIT_FS_SEL_250;
+	mpu6000ConfigRegs_s.gyroConf_27 = MPU60x0_BIT_FS_SEL_1000;
 	mpu6000ConfigRegs_s.int_En_56 = 0x00;
 	mpu6000ConfigRegs_s.int_pin_55 = 0x00;
 	mpu6000ConfigRegs_s.int_status_58 = 0x00;

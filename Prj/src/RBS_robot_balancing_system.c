@@ -127,7 +127,7 @@ RBS_GetDesiredAngle(
 	__PFPT__ error =
 		-pSpeedControl_s->target + pSpeedControl_s->currSpeedFilt;
 
-	pSpeedControl_s->piRegulator_s.proportional_s.kP = -(((fabsf(error)) * 9.01f) + 0.0005);
+	pSpeedControl_s->piRegulator_s.proportional_s.kP = -(((fabsf(error)) * 9.01f) + 0.05);
 //	pSpeedControl_s->piRegulator_s.integral_s.kI =
 //		pSpeedControl_s->piRegulator_s.proportional_s.kP * 1.0f;
 
@@ -135,7 +135,7 @@ RBS_GetDesiredAngle(
 	{
 		pSpeedControl_s->piRegulator_s.proportional_s.kP = -0.01f;
 	}
-	pSpeedControl_s->piRegulator_s.integral_s.kI = -(((fabsf(error)) * 5.0f) + 0.01);
+	pSpeedControl_s->piRegulator_s.integral_s.kI = -(((fabsf(error)) * 3.0f) + 0.001);
 
 	/* Формирование заданного угла наклона */
 	__PFPT__ desiredAngle =
