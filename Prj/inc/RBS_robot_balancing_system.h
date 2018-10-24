@@ -29,6 +29,16 @@
 
 
 /*#### |Begin| --> Секция - "Определение констант" ###########################*/
+#if __PFPT_CHAR__  == 'f'
+#define __RBS_sin(x)		sinf(x)
+#define __RBS_pow(x,y)    powf(x,y)
+#define __RBS_fabs(x)		fabsf(x)
+
+#elif __PFPT_CHAR__  == 'd'
+#define __RBS_sin(x)		sin(x)
+#define __RBS_pow(x,y)    pow(x,y)
+#define __RBS_fabs(x)		fabs(x)
+#endif
 /*#### |End  | <-- Секция - "Определение констант" ###########################*/
 
 

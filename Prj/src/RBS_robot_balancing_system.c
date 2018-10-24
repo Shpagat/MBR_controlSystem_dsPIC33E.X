@@ -68,13 +68,14 @@ RBS_GetControlForRobot(
 	__PFPT__ pitchAngle,
 	__PFPT__ pitchAngularSpeed)
 {
-	if ((p_s->startSystem_flag == 0u) && (fabsf((float)pitchAngle) < 0.01f))
+	if ((p_s->startSystem_flag == 0u) 
+	&& (__RBS_fabs(pitchAngle) < (__PFPT__) 0.01))
 	{
 		p_s->startSystem_flag = 1u;
 	}
 	/* Если угол наклона больше некого значения по модулю, то необходимо
 	 * управляющее воздействие установить в нуль */
-	if (fabsf((float)pitchAngle) > (float) 1.3)
+	if (__RBS_fabs(pitchAngle) > (__PFPT__) 1.3)
 	{
 		p_s->motorControl						= (__PFPT__) 0.0;
 		p_s->motorControl_a[RBS_LEFT_MOTOR]		= (__PFPT__) 0.0;
@@ -127,15 +128,15 @@ RBS_GetDesiredAngle(
 	__PFPT__ error =
 		-pSpeedControl_s->target + pSpeedControl_s->currSpeedFilt;
 
-	pSpeedControl_s->piRegulator_s.proportional_s.kP = -(((fabsf(error)) * 9.01f) + 0.05);
+	pSpeedControl_s->piRegulator_s.proportional_s.kP = -(((__RBS_fabs(error)) * 9.01f) + 0.05);
 //	pSpeedControl_s->piRegulator_s.integral_s.kI =
 //		pSpeedControl_s->piRegulator_s.proportional_s.kP * 1.0f;
 
 	if (fabsf(pSpeedControl_s->piRegulator_s.proportional_s.kP) > 0.01)
 	{
-		pSpeedControl_s->piRegulator_s.proportional_s.kP = -0.01f;
+		pSpeedControl_s->piRegulator_s.proportional_s.kP = -0.01;
 	}
-	pSpeedControl_s->piRegulator_s.integral_s.kI = -(((fabsf(error)) * 3.0f) + 0.001);
+	pSpeedControl_s->piRegulator_s.integral_s.kI = -(((__RBS_fabs(error)) * 3.0) + 0.001);
 
 	/* Формирование заданного угла наклона */
 	__PFPT__ desiredAngle =
@@ -143,9 +144,7 @@ RBS_GetDesiredAngle(
 			&pSpeedControl_s->piRegulator_s,
 			error,
 			NULL);
-
-
-
+	
 	return (desiredAngle);
 }
 

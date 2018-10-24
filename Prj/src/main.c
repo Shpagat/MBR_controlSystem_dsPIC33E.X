@@ -17,6 +17,7 @@
 float acc_a[IISMPU_VECT_SIZE];
 float gyr_a[IISMPU_VECT_SIZE];
 float mpuTemperature;
+double testDouble = 5.0;
 
 char testMessage_a[] = "Hello World.\r\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/

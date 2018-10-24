@@ -66,7 +66,7 @@ LRMC_SendCmdForLeftRightMotors(
 		p_s,
 		rightMotor,
 		leftMotor,
-		(__VMCPC_F3M_FPT__) 0.0f);
+		(__VMCPC_F3M_FPT__) 0.0);
 
 	/* Старт передачи пакета данных */
 	LRMC_Start_UART2DMATramsmit(

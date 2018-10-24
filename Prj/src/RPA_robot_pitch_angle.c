@@ -35,10 +35,10 @@ RPA_GetPitchAngle(
 {
 	return (PCF_GetPitchByCompFilt(
 				&RPA_copmFiltDataForPitch_s,
-				pGyrPitch,
-				accX,
-				accY,
-				accZ));
+				(__PCF_FPT__*)pGyrPitch,
+				(__PCF_FPT__)accX,
+				(__PCF_FPT__)accY,
+				(__PCF_FPT__)accZ));
 }
 
 void
@@ -53,7 +53,7 @@ RPA_Init_DataForCalcPitchAngle(
 	init_s.integralCoeff		= (__PCF_FPT__) 0.0000001f;
 	init_s.dT					= (__PCF_FPT__) INTEGRATE_PERIOD_IN_SEC;
 	init_s.accNormWindow		= (__PCF_FPT__) 0.1;
-	init_s.compFiltValForAcc	= (__PCF_FPT__) 0.15;
+	init_s.compFiltValForAcc	= (__PCF_FPT__) 0.0;
 	init_s.integralErrorSaturation = (__PCF_FPT__) 0.015;
 	PCF_Init_CompFilt(
 		&RPA_copmFiltDataForPitch_s,
