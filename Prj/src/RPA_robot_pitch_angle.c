@@ -13,7 +13,7 @@
 
 
 /*#### |Begin| --> Секция - "Глобальные переменные" ##########################*/
-pcf_all_dta_for_pitch_s RPA_copmFiltDataForPitch_s;
+pcf_data_for_pitch_s RPA_copmFiltDataForPitch_s;
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
 
 
@@ -46,7 +46,7 @@ RPA_Init_DataForCalcPitchAngle(
 	void)
 {
 	/* Инициализация констант для вычисления угла наклона*/
-	pcf_all_dta_for_pitch_init_struct_s init_s;
+	pcf_data_for_pitch_init_struct_s init_s;
 	PCF_CompFilt_StructInit(
 		&init_s);
 	init_s.compFiltCoeff		= (__PCF_FPT__) 0.9996f;

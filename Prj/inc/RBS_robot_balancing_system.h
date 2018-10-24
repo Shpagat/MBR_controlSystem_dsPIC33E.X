@@ -64,7 +64,7 @@ typedef struct
 	/**
 	 * @brief Комплементарный фильтр для фильтрации текущей скорости
 	 */
-	FILT_comp_filt_s compFilt_s;
+	filt_complementary_s compFilt_s;
 
 	regul_pid_s piRegulator_s;
 } rbs_speed_control_s;

@@ -36,7 +36,7 @@
 
 
 /*#### |Begin| --> Секция - "Определение глобальных переменных" ##############*/
-extern pcf_all_dta_for_pitch_s RPA_copmFiltDataForPitch_s;
+extern pcf_data_for_pitch_s RPA_copmFiltDataForPitch_s;
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 

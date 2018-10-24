@@ -77,7 +77,7 @@ RBS_GetControlForRobot(
 	if (fabsf((float)pitchAngle) > (float) 1.3)
 	{
 		p_s->motorControl						= (__PFPT__) 0.0;
-		p_s->motorControl_a[RBS_LEFT_MOTOR]	= (__PFPT__) 0.0;
+		p_s->motorControl_a[RBS_LEFT_MOTOR]		= (__PFPT__) 0.0;
 		p_s->motorControl_a[RBS_RIGHT_MOTOR]	= (__PFPT__) 0.0;
 		p_s->speedControl_s.currSpeed			= (__PFPT__) 0.0;
 		p_s->speedControl_s.currSpeedFilt		= (__PFPT__) 0.0;
@@ -119,7 +119,7 @@ RBS_GetDesiredAngle(
 {
 	/* Фильтрация текущей скорости */
 	pSpeedControl_s->currSpeedFilt =
-		FILT_ComplFilt_f32(
+		FILT_Complementary_fpt(
 			&pSpeedControl_s->compFilt_s,
 			pSpeedControl_s->currSpeed);
 
