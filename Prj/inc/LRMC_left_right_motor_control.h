@@ -51,8 +51,8 @@ LRMC_Init_UART_DMA_IOPins(
 extern void
 LRMC_SendCmdForLeftRightMotors(
 	vmcpc_f3m_package_s *p_s,
-	__VMCPC_FPT__ leftMotor,
-	__VMCPC_FPT__ rightMotor);
+	__VMCPC_F3M_FPT__ leftMotor,
+	__VMCPC_F3M_FPT__ rightMotor);
 
 extern void
 LRMC_StartForce_UART2DMATransmit(

@@ -61,10 +61,10 @@ int main(
 
 		__PFPT__ robotPitchAngle =
 			RPA_GetPitchAngle(
-				&gyr_a[IISMPU_PITCH],
-				acc_a[IISMPU_ROLL],
-				acc_a[IISMPU_PITCH],
-				acc_a[IISMPU_YAW]);
+				(__PFPT__*) &gyr_a[IISMPU_PITCH],
+				(__PFPT__) acc_a[IISMPU_ROLL],
+				(__PFPT__) acc_a[IISMPU_PITCH],
+				(__PFPT__) acc_a[IISMPU_YAW]);
 
 		VTMR_GetTimerValue(
 			&compFiltRuntime_s);
@@ -80,8 +80,8 @@ int main(
 		{
 			LRMC_SendCmdForLeftRightMotors(
 				&LRMC_leftRightMotorControlPack_s,
-				(__VMCPC_FPT__) RBS_balancingSystem_s.motorControl_a[RBS_LEFT_MOTOR],
-				(__VMCPC_FPT__) RBS_balancingSystem_s.motorControl_a[RBS_RIGHT_MOTOR]);
+				(__VMCPC_F3M_FPT__) RBS_balancingSystem_s.motorControl_a[RBS_LEFT_MOTOR],
+				(__VMCPC_F3M_FPT__) RBS_balancingSystem_s.motorControl_a[RBS_RIGHT_MOTOR]);
 		}
 
 		/* ################ Отладочная информация ####################### */

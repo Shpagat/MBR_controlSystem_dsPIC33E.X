@@ -42,14 +42,17 @@
 
 
 /*#### |Begin| --> Секция - "Определение констант" ###########################*/
-#define INTEGRATE_PERIOD_IN_SEC     ((float)((float)__HARD_PROG_TACT_IN_US__ / 1000000.0f))
-//#define __DI_MAX_PLOTS_IN_PACKAGE__ 30
-//#define __REGUL_FLOAT_POINT_TYPE__ float
-
-#define __PFPT__  float
-#if !defined (__PFPT__)
-#error "Please, set __PRPT__ float or double"
+#if (__PFPT_CHAR__  == 'f') && (!defined __PFPT__)
+#error "Define __PFPT__ = float"
+#elif (__PFPT_CHAR__  == 'd') && (!defined __PFPT__)
+#error "Define __PFPT__ = double"
 #endif
+
+#if (!defined __PFPT_CHAR__) && (!defined __PFPT__)
+#error "Define __PFPT_CHAR__ = 'f' and __PFPT__ = float or __PFPT_CHAR__ = 'd' and __PFPT__ = double"
+#endif
+
+#define INTEGRATE_PERIOD_IN_SEC     ((__PFPT__)((__PFPT__)__HARD_PROG_TACT_IN_US__ / 1000000.0f))
 /*#### |End  | <-- Секция - "Определение констант" ###########################*/
 
 

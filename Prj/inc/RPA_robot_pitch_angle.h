@@ -45,12 +45,12 @@ extern void
 RPA_Init_DataForCalcPitchAngle(
 	void);
 
-extern float
+extern __PFPT__
 RPA_GetPitchAngle(
-	float *pGyrPitch,
-	float accX,
-	float accY,
-	float accZ);
+	__PFPT__ *pGyrPitch,
+	__PFPT__ accX,
+	__PFPT__ accY,
+	__PFPT__ accZ);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 

@@ -26,12 +26,12 @@ pcf_data_for_pitch_s RPA_copmFiltDataForPitch_s;
 
 
 /*#### |Begin| --> Секция - "Описание глобальных функций" ####################*/
-float
+__PFPT__
 RPA_GetPitchAngle(
-	float *pGyrPitch,
-	float accX,
-	float accY,
-	float accZ)
+	__PFPT__ *pGyrPitch,
+	__PFPT__ accX,
+	__PFPT__ accY,
+	__PFPT__ accZ)
 {
 	return (PCF_GetPitchByCompFilt(
 				&RPA_copmFiltDataForPitch_s,
