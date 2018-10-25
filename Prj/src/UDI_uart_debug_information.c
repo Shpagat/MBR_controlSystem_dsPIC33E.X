@@ -37,7 +37,7 @@ UDI_Init_DMA3_For_Uart3Tx(
 
 static void
 UDI_Init_DMA4_For_Uart3Rx(
-void);
+	void);
 /*#### |End  | <-- Секция - "Прототипы локальных функций" ####################*/
 
 
@@ -91,33 +91,44 @@ UDI_Init_All_UART3_RxTx_With_DMA_Tx(
 		baudrate);
 
 	UDI_Init_DMA3_For_Uart3Tx();
-    
-    UDI_Init_DMA4_For_Uart3Rx();
+
+	UDI_Init_DMA4_For_Uart3Rx();
 }
 
 void
-UDI_Init_DMA4_For_Uart3Rx(void)
+UDI_StartUart3_DMA3_Transmit(
+	unsigned int *pMemSrc,
+	unsigned int cnt)
 {
-    {
-	DMA4CONbits.AMODE = 0; //	Configure DMA for Register Indirect mode
-//								with post-increment
-	DMA4CONbits.SIZE = 1;
-	DMA4CONbits.MODE = 1;
-	DMA4CONbits.DIR = 0; // RAM-to-Peripheral data receive
-	DMA4CNT = 0;
-//	DMA4REQ = 0x0058; // Select UART3 Receiver
-	DMA4PAD = (volatile unsigned int) &U3RXREG;
-	DMA4STAL = 0x0000;
-	DMA4STAH = 0x0000;
-	DMA4STBL = 0x0000;
-	DMA4STBH = 0x0000;
+	if ((DMA3CONbits.CHEN == 0) && (U3STAbits.TRMT == 1))
+	{
+		UDI_StartForceUart3_DMA3_Transmit(
+			pMemSrc,
+			cnt);
+	}
+}
 
-	/*  UART3RX – UART3 Receiver */
-	DMA4REQbits.IRQSEL = 0b01010010;
+void
+UDI_StartForceUart3_DMA3_Transmit(
+	unsigned int *pMemSrc,
+	unsigned int cnt)
+{
+	/* Отключение канала DMA */
+	DMA3CONbits.CHEN = 0;
 
-	IFS2bits.DMA4IF = 0; // Clear DMA Interrupt Flag
-	IEC2bits.DMA4IE = 1; // Enable DMA Interrupt
-    }
+	/* Сброс флага Overrun модуля UART */
+	U3STAbits.OERR = 0;
+
+	/* Присваивание адреса в памяти */
+	DMA3STAL = (unsigned int)pMemSrc;
+//	DMA3STAH = (unsigned int)pMemSrc;
+
+	// Выставка количества байт, которое необходимо передать;
+	DMA3CNTbits.CNT = cnt - 1;
+
+	// Старт канала DMA;
+	DMA3CONbits.CHEN = 1;
+	DMA3REQbits.FORCE = 1;
 }
 
 void
@@ -180,7 +191,7 @@ UDI_Init_UART3_RxTx(
 //	U3MODEbits.UARTEN = 1;
 //	U3STAbits.UTXEN = 1;
 
-	DisableIntU3TX;
+	// DisableIntU3TX;
 //	DisableIntU3RX;
 }
 
@@ -193,11 +204,11 @@ UDI_Init_IO_Ports(void)
 	// ##################### //
 	//  "UART 3 <RX>" - "RB3/AN3/C2IN1+/VPIO/RPI35" - "010 0011"
 	//  |Input Name     |   |Function Name|     |Register|      |Configuration Bits|
-	//  |UART3 Receive  |   |U3RX         |     |RPINR27 |      |U3RXR 6:0         
-    ANSELBbits.ANSB3 = 0;
-		TRISBbits.TRISB3 = 1;
-		RPINR27bits.U3RXR = 0b0100011;
-        
+	//  |UART3 Receive  |   |U3RX         |     |RPINR27 |      |U3RXR 6:0
+	ANSELBbits.ANSB3 = 0;
+	TRISBbits.TRISB3 = 1;
+	RPINR27bits.U3RXR = 0b0100011;
+
 //        U3MODEBITS.UARTEN = 1;
 //        U3MODEBITS.USIDL = 1;
 //        U3MODEBITS.RTSMD = 0;
@@ -207,8 +218,8 @@ UDI_Init_IO_Ports(void)
 //        U3MODEBITS.ABAUD = 1;
 //        U3MODEBITS.URXINV = 0;
 //        U3MODEBITS.BRGH = 1;
-        
-    
+
+
 
 	// "UART 3 <TX>" - "AN28/PWM3L/PMD4/RP84/RE4"
 	//  |Function|      |RPnR 5:0 |     |Output Name                 |
@@ -243,43 +254,31 @@ UDI_Init_DMA3_For_Uart3Tx(
 	IEC2bits.DMA3IE = 1; // Enable DMA Interrupt
 }
 
-
-
 void
-UDI_StartUart3_DMA3_Transmit(
-	unsigned int *pMemSrc,
-	unsigned int cnt)
+UDI_Init_DMA4_For_Uart3Rx(void)
 {
-	if ((DMA3CONbits.CHEN == 0) && (U3STAbits.TRMT == 1))
 	{
-		UDI_StartForceUart3_DMA3_Transmit(
-			pMemSrc,
-			cnt);
+		DMA4CONbits.AMODE = 0; //	Configure DMA for Register Indirect mode
+//								with post-increment
+		DMA4CONbits.SIZE = 1;
+		DMA4CONbits.MODE = 1;
+		DMA4CONbits.DIR = 0; // RAM-to-Peripheral data receive
+		DMA4CNT = 0;
+//	DMA4REQ = 0x0058; // Select UART3 Receiver
+		DMA4PAD = (volatile unsigned int) &U3RXREG;
+		DMA4STAL = 0x0000;
+		DMA4STAH = 0x0000;
+		DMA4STBL = 0x0000;
+		DMA4STBH = 0x0000;
+
+		/*  UART3RX – UART3 Receiver */
+		DMA4REQbits.IRQSEL = 0b01010010;
+
+		IFS2bits.DMA4IF = 0; // Clear DMA Interrupt Flag
+		IEC2bits.DMA4IE = 1; // Enable DMA Interrupt
 	}
 }
 
-void
-UDI_StartForceUart3_DMA3_Transmit(
-	unsigned int *pMemSrc,
-	unsigned int cnt)
-{
-	/* Отключение канала DMA */
-	DMA3CONbits.CHEN = 0;
-
-	/* Сброс флага Overrun модуля UART */
-	U3STAbits.OERR = 0;
-
-	/* Присваивание адреса в памяти */
-	DMA3STAL = (unsigned int)pMemSrc;
-//	DMA3STAH = (unsigned int)pMemSrc;
-
-	// Выставка количества байт, которое необходимо передать;
-	DMA3CNTbits.CNT = cnt - 1;
-
-	// Старт канала DMA;
-	DMA3CONbits.CHEN = 1;
-	DMA3REQbits.FORCE = 1;
-}
 
 void __attribute__ ((__interrupt__, auto_psv))
 _U3TXInterrupt (void)
