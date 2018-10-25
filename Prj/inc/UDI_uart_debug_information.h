@@ -63,6 +63,12 @@ extern void
 UDI_StartUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt);
+
+
+extern void
+UDI_StartForceUart3_DMA4_Receiver(
+	unsigned int *pMemSrc,
+	unsigned int cnt);
 /*#### |End  | <-- Секция - "Прототипы глобальных функций" ###################*/
 
 

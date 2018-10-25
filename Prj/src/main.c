@@ -21,10 +21,10 @@ double testDouble = 5.0;
 
 char testMessage_a[] = "Hello World.\r\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
-
-
+char receiveTestMessage[4];
 /*#### |Begin| --> Секция - "Локальные переменные" ###########################*/
 VTMR_tmr_s compFiltRuntime_s;
+size_t dmaReceiveEn_flag = 1;
 /*#### |End  | <-- Секция - "Локальные переменные" ###########################*/
 
 
@@ -85,10 +85,23 @@ int main(
 				(__VMCPC_F3M_FPT__) RBS_balancingSystem_s.motorControl_a[RBS_RIGHT_MOTOR]);
 		}
 
+        if (dmaReceiveEn_flag == 1)
+        {
+            dmaReceiveEn_flag = 0;
+            memset((void*) receiveTestMessage, 'g', 4);
+            UDI_StartForceUart3_DMA4_Receiver((unsigned int*)receiveTestMessage, 3u);
+        }
 		/* ################ Отладочная информация ####################### */
 		/* Формирование отладочного пакета данных */
-		UDI_GetAndSendDebugPackForSerialPlot(
-			&UDI_serialPlotDataPackage_s);
+//		UDI_GetAndSendDebugPackForSerialPlot(
+//			&UDI_serialPlotDataPackage_s);
+        
+        UDI_StartUart3_DMA3_Transmit((unsigned int*)testMessage_a, strlen(testMessage_a));
+        
+        if (DMA4CONbits.CHEN == 0)
+        {
+//            UDI_StartForceUart3_DMA4_Receiver((unsigned int*)receiveTestMessage, 15);
+        }
 		/* ############################################################## */
 
 		PTWT_ProgTactEndLoop(
