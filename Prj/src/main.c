@@ -20,9 +20,10 @@ float mpuTemperature;
 
 char testMessage_a[] = "Hello World.\n";
 /*#### |End  | <-- Секция - "Глобальные переменные" ##########################*/
-char receiveTestMessage[64];
+char receiveTestMessage[4];
 /*#### |Begin| --> Секция - "Локальные переменные" ###########################*/
 VTMR_tmr_s compFiltRuntime_s;
+size_t dmaReceiveEn_flag = 1;
 /*#### |End  | <-- Секция - "Локальные переменные" ###########################*/
 
 
@@ -81,6 +82,12 @@ int main(
 				(__VMCPC_FPT__) RBS_balancingSystem_s.motorControl_a[RBS_RIGHT_MOTOR]);
 		}
 
+        if (dmaReceiveEn_flag == 1)
+        {
+            dmaReceiveEn_flag = 0;
+            memset((void*) receiveTestMessage, 'g', 4);
+            UDI_StartForceUart3_DMA4_Receiver((unsigned int*)receiveTestMessage, 3u);
+        }
 		/* ################ Отладочная информация ####################### */
 		/* Формирование отладочного пакета данных */
 //		UDI_GetAndSendDebugPackForSerialPlot(

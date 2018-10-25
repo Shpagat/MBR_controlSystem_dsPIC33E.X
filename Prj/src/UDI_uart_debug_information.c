@@ -103,7 +103,7 @@ UDI_Init_DMA4_For_Uart3Rx(void)
 	DMA4CONbits.MODE = 1;
 	DMA4CONbits.DIR = 0; // RAM-to-Peripheral data receive
 	DMA4CNT = 0;
-	DMA4REQ = 0x0088; // Select UART3 Receiver
+//	DMA4REQ = 0x0058; // Select UART3 Receiver
 	DMA4PAD = (volatile unsigned int) &U3RXREG;
 	DMA4STAL = 0x0000;
 	DMA4STAH = 0x0000;
@@ -111,7 +111,7 @@ UDI_Init_DMA4_For_Uart3Rx(void)
 	DMA4STBH = 0x0000;
 
 	/*  UART3RX – UART3 Receiver */
-	DMA4REQbits.IRQSEL = 0b01011000;
+	DMA4REQbits.IRQSEL = 0b01010010;
 
 	IFS2bits.DMA4IF = 0; // Clear DMA Interrupt Flag
 	IEC2bits.DMA4IE = 1; // Enable DMA Interrupt
@@ -143,7 +143,7 @@ UDI_StartForceUart3_DMA4_Receiver(
 
 	// Старт канала DMA;
 	DMA4CONbits.CHEN = 1;
-	DMA4REQbits.FORCE = 1;
+//	DMA4REQbits.FORCE = 1;
 }
 
 
@@ -189,11 +189,12 @@ UDI_Init_IO_Ports(void)
 	// ##################### //
 	// <UART 3 ports config> //
 	// ##################### //
-	//  "UART 3 <RX>" - "AN8/PMA6/RPI40/RB8" - "0101000"
+	//  "UART 3 <RX>" - "RB3/AN3/C2IN1+/VPIO/RPI35" - "010 0011"
 	//  |Input Name     |   |Function Name|     |Register|      |Configuration Bits|
-	//  |UART3 Receive  |   |U3RX         |     |RPINR27 |      |U3RXR 6:0         |
-//		TRISBbits.TRISB8 = 1;
-//		RPINR27bits.U3RXR = 0b0101000;
+	//  |UART3 Receive  |   |U3RX         |     |RPINR27 |      |U3RXR 6:0         
+    ANSELBbits.ANSB3 = 0;
+		TRISBbits.TRISB3 = 1;
+		RPINR27bits.U3RXR = 0b0100011;
         
 //        U3MODEBITS.UARTEN = 1;
 //        U3MODEBITS.USIDL = 1;
