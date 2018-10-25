@@ -64,6 +64,7 @@
 extern float acc_a[3];
 extern float gyr_a[3];
 extern float mpuTemperature;
+extern char receiveTestMessage[];
 /*#### |End  | <-- Секция - "Определение глобальных переменных" ##############*/
 
 
