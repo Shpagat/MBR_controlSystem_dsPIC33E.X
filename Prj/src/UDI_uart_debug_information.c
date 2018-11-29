@@ -100,12 +100,20 @@ UDI_StartUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt)
 {
+<<<<<<< HEAD
 	if ((DMA3CONbits.CHEN == 0) && (U3STAbits.TRMT == 1))
 	{
 		UDI_StartForceUart3_DMA3_Transmit(
 			pMemSrc,
 			cnt);
 	}
+=======
+    U3MODEBITS.UARTEN = 1;
+    U3STABITS.URXISEL = 0x;
+    U3STABITS.UTXEN = 1; 
+    U3BRG = (64000000u / (16 * baudrate)) - 1u;
+    
+>>>>>>> 8eb5c125ef99e50c83495616999d20ada29a5e70
 }
 
 void
@@ -113,6 +121,7 @@ UDI_StartForceUart3_DMA3_Transmit(
 	unsigned int *pMemSrc,
 	unsigned int cnt)
 {
+<<<<<<< HEAD
 	/* Отключение канала DMA */
 	DMA3CONbits.CHEN = 0;
 
@@ -129,6 +138,20 @@ UDI_StartForceUart3_DMA3_Transmit(
 	// Старт канала DMA;
 	DMA3CONbits.CHEN = 1;
 	DMA3REQbits.FORCE = 1;
+=======
+    /* UART Tx port AN28/PWM3L/PMD4/RP84/RE4 */
+    /* 101 0100 I/O RP84 */
+    /* U3TX 011011 RPn tied to UART3 Transmit */
+    ANSELEbits.ANSE4 = 0;
+    TRISEbits.TRISE4 = 0;
+    RPOR5bits.RP84R = 0b1010100;
+    
+    /* UART Rx Port RB3/AN3/C2IN1+/VPIO/RPI35 */
+    /* UART3 Receive U3RX RPINR27 U3RXR<6:0> */
+    ANSELBbits.ANSB3 = 0;
+    TRISBbits.TRISB3 = 1;
+    RPINR27BITS.U3RXR = 0b010 011 ;
+>>>>>>> 8eb5c125ef99e50c83495616999d20ada29a5e70
 }
 
 void
@@ -166,6 +189,7 @@ UDI_Init_UART3_RxTx(
 	unsigned int long fcy,
 	unsigned int long baudrate)
 {
+<<<<<<< HEAD
 	PIC_Init_USART_3_1StopBit_8BitData_RxIntEnChar_TxIntEnChar(
 		fcy,
 		baudrate);
@@ -252,11 +276,22 @@ UDI_Init_DMA3_For_Uart3Tx(
 
 	IFS2bits.DMA3IF = 0; // Clear DMA Interrupt Flag
 	IEC2bits.DMA3IE = 1; // Enable DMA Interrupt
+=======
+	DMA3CONBITS.CHEN = 1;
+    DMA3CONBITS.SIZE = 1;
+    DMA3CONBITS.DIR = 1;
+    DMA3CONBITS.AMODE = 0b00;
+    DMA3CONBITS.MODE = 0b00;
+    
+    DMA3REQBITS.IRQSEL = 01010011;
+    
+>>>>>>> 8eb5c125ef99e50c83495616999d20ada29a5e70
 }
 
 void
 UDI_Init_DMA4_For_Uart3Rx(void)
 {
+<<<<<<< HEAD
 	{
 		DMA4CONbits.AMODE = 0; //	Configure DMA for Register Indirect mode
 //								with post-increment
@@ -277,6 +312,50 @@ UDI_Init_DMA4_For_Uart3Rx(void)
 		IFS2bits.DMA4IF = 0; // Clear DMA Interrupt Flag
 		IEC2bits.DMA4IE = 1; // Enable DMA Interrupt
 	}
+=======
+    size_t DMA3_CompleteFlag = 1;
+	void Start_DMA3_UART3TX(unsigned int cntBytes)
+{
+	if (DMA3_CompleteFlag == 1)
+	{
+		unsigned int trash = U2TXREG;
+		trash = U3TXREG;
+		trash = U3TXREG;
+		trash = U3TXREG;
+
+		/* Сброс флага Overrun модуля UART */
+		U3STAbits.OERR = 0;
+
+		// Выставка количества байт, которое необходимо передать;
+		DMA3CNTbits.CNT = cntBytes - 1;
+
+		// Старт канала DMA;
+		DMA3CONbits.CHEN = 1;
+		DMA3REQbits.FORCE = 1;
+
+		// Сброс флага завершения работы канала DMA;
+		DMA3_CompleteFlag = 0;
+	}
+}
+    
+    void __attribute__ ((__interrupt__, no_auto_psv))
+_DMA3Interrupt (void)
+{
+	// Сброс флага прерывания;
+	IFS2bits.DMA3IF = 0;
+
+#if defined (__GET_RUN_TIME_VALUES__)
+	// Расчет времени работы канала DMA2;
+	runTimeStruct.sendDebugPackage = VTMR_GetMaxTimerValue (&dma3CntStruct);
+#endif
+
+	/* Отключение канала DMA */
+	DMA3CONbits.CHEN = 0;
+
+	// Флаг завершения работы канала DMA3;
+	DMA3_CompleteFlag = 1;
+}
+>>>>>>> 8eb5c125ef99e50c83495616999d20ada29a5e70
 }
 
 
